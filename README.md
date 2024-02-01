@@ -42,9 +42,12 @@ colocar a localização da pasta onde as imagens serão salvas. (deve ter a perm
 
 <h3>editorRobsonFarias.css</h3>
 Voê deverá inserir com a tag link esse arquivo em todos os arquivos que imprimirem o conteúdo criado pelo editor, ele contem as tags personalizadas.<br>
-<pre>< link rel="stylesheet" type="text/css" href="rffeditor/editorRobsonFarias.css" /></pre><br>
 Obs.: Não altere nenhum tag e nem mude o nome.
+<pre>< link rel="stylesheet" type="text/css" href="rffeditor/editorRobsonFarias.css" /></pre><br>
 
+
+><h2>Obs</h2>
+>Essa é uma versão atualizada do editor que eu criei junto com o FAQ <pre>(https://github.com/robsonfdfarias/FAQ | commit de 30/01/2024 - 4f41c20).</pre> Eu atualizei o FAQ para pegar daqui do meu github o editor para um melhor controle da versão e para uso em outros aplicativos.
   
 <h2>☺Autor</h2>
 <strong>Robson Ferreira de Farias</strong><br>
