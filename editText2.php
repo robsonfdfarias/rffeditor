@@ -1,4 +1,5 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
 
 <head>
 
@@ -11,7 +12,7 @@
     .table{
         margin:0px;
     }
-
+ 
 
     #typefontface option:nth-child(2){
         font-family: 'monospace';
@@ -283,7 +284,23 @@
     }
 
 
-
+    #editVideo {
+        width: 200px;
+        position: fixed;
+        top: 100px;
+        left: 0px;
+        margin: auto;
+        background-color: white;
+        padding: 20px;
+        /* height: 70%; */
+        /* overflow-y: auto; */
+        display: none;
+        flex-direction: column;
+        border: 1px solid #dfdfdf;
+        box-shadow: 2px 2px 2px rgba(0,0,0,0.2);
+        border-radius: 8px;
+        z-index: 10001;
+    }
     
 
     #emotions {
@@ -370,6 +387,14 @@
 </head>
 
 <body>
+    
+
+<div id="editVideo">
+    <input type="text" name="larg" id="larg">
+    <input type="text" name="alt" id="alt">
+    <button onclick="salveUpdateIframe()">alterar</button>
+    <button onclick="cancelEditMedia()">Cancelar</button>
+</div>
 <div id="efeitosTexto">
     <div id="topEfeitoTexto">
         <div id="tituloEfeitoTexto">Efeitos de texto</div>
@@ -415,7 +440,12 @@
     </div>
 </div>
 
-
+<!-- <div id="editVideo">
+    <input type="text" name="larg" id="larg">
+    <input type="text" name="alt" id="alt">
+    <button onclick="salveUpdateIframe()">alterar</button>
+    <button onclick="cancelEditMedia()">Cancelar</button>
+</div> -->
 
 <div id="ferramentas">
     <!-- <button id="testeSel" onclick="delElement()">Sel</button> -->
@@ -505,7 +535,8 @@
     <img src="rffeditor/imgEditor/deleteTableColumn.svg" title="Excluir coluna selecionada" onClick="delTd()" unselectable="on" spaw_state="true"/>
     <img src="rffeditor/imgEditor/deleteTableRowAfter.svg" title="Excluir linha selecionada" onClick="delTr()" unselectable="on" spaw_state="true"/>
 
-    <img src="rffeditor/imgEditor/inserthyperlinkcontrol.svg" title="Inserir hiperlink" onClick="openWindowLink(), this.setAttribute('style', 'background-color:#cdcdcd;'), selectElem()" id="insertHyperLink" />
+    <!-- <img src="rffeditor/imgEditor/inserthyperlinkcontrol.svg" title="Inserir hiperlink" onClick="openWindowLink(), this.setAttribute('style', 'background-color:#cdcdcd;'), selectElem()" id="insertHyperLink" /> -->
+    <img src="rffeditor/imgEditor/inserthyperlinkcontrol.svg" title="Inserir hiperlink" onClick="openWindowLink()" id="insertHyperLink" />
     <img src="rffeditor/imgEditor/removehyperlink.svg" title="Remover hiperlink" onClick="unlink()" />
 
     <img src="rffeditor/imgEditor/emotions.svg" title="Inserir emotions" style="width:40px; height:auto;" onClick="abreJanEmotions()" />
@@ -513,13 +544,14 @@
     
 
 </div>
-<div id="texto" contenteditable="true" autofocus required autocomplete="off" spellcheck="true">Digite o seu artigo aqui...</div>
+<div id="texto" contenteditable="true" autofocus required autocomplete="off" spellcheck="true" class="box"><div>Digite o seu artigo aqui...</div></div>
 
 
         <div id="preview"></div>
         <div id="porcento"></div>
 <script src="rffeditor/upload.js"></script>
 <script src="rffeditor/func.editor.robson.js"></script>
+<script src="rffeditor/dragDrop.js"></script>
 <script>
     var janEfeitoTexto = document.getElementById("efeitosTexto");
     function fechaJanEfeitosTexto(){
@@ -552,6 +584,39 @@
     }
     function closeWindowsColorDestText(){
         divCorDestText.setAttribute('style', 'display:none;');
+    }
+
+    var frame = '';
+
+    function editVideo(ob, event){
+        //
+        const janVideoEdit = document.getElementById('editVideo');
+        // console.log(ob)
+        let pai = ob.parentNode;
+        let paipai = pai.parentNode;
+        let position = paipai.getBoundingClientRect();
+        janVideoEdit.setAttribute('style', 'display:block; top:'+position.y+'px; left:'+position.x+'px;');
+        // console.log(paipai)
+        // console.log(paipai.getBoundingClientRect())
+        let ifr = paipai.children[1]
+        // console.log(ifr.getAttribute('width'))
+        document.getElementById('larg').value = ifr.getAttribute('width');
+        document.getElementById('alt').value = ifr.getAttribute('height');
+        frame=ifr;
+    }
+
+    function cancelEditMedia(){
+        document.getElementById('editVideo').setAttribute('style', 'display:none;')
+    }
+
+    function salveUpdateIframe(){
+        // console.log('....................................................................')
+        // console.log(frame)
+        let larg = document.getElementById('larg').value;
+        let alt = document.getElementById('alt').value;
+        frame.setAttribute('width', larg);
+        frame.setAttribute('height', alt);
+        document.getElementById('editVideo').setAttribute('style', 'display:none;')
     }
 
 </script>

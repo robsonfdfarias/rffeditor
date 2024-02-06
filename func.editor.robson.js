@@ -17,13 +17,13 @@
         document.getElementById('param').textContent = 'data-param = ' + param;*/
     }); 
     document.getElementById('tamFont').addEventListener('change', function() {
-        var selectedOption = this.children[this.selectedIndex];
-        console.log(selectedOption)
+        // var selectedOption = this.children[this.selectedIndex];
+        // console.log(selectedOption)
         var value = this.value;
-        var param = selectedOption.getAttribute("data-param");
+        // var param = selectedOption.getAttribute("data-param");
         tamanhoFont(value)
-        console.log(value)
-        console.log(param)
+        // console.log(value)
+        // console.log(param)
         this.children['padrao'].selected = true;
 
         /*document.getElementById('value').textContent = 'value = ' + value;
@@ -31,12 +31,12 @@
     });
     document.getElementById('typefontface').addEventListener('change', function() {
         var selectedOption = this.children[this.selectedIndex];
-        console.log(selectedOption)
+        // console.log(selectedOption)
         var value = this.value;
-        var param = selectedOption.getAttribute("data-param");
+        // var param = selectedOption.getAttribute("data-param");
         fontFaceSel(value)
-        console.log(value)
-        console.log(param)
+        // console.log(value)
+        // console.log(param)
         // this.children['padrao'].selected = true;
 
         /*document.getElementById('value').textContent = 'value = ' + value;
@@ -88,29 +88,6 @@ function startup() {
 
 /*********************************** EXCLUIR TAG (EFEITO) INICIO **************************************/
 
-// function selectElem(){
-//     var range = window.getSelection().getRangeAt(0).toString();
-//     var selecao = window.getSelection().getRangeAt(0).startContainer;
-//     console.log(selecao)
-//     var tag = selecao.parentNode;
-//     console.log(tag);
-//     // tag = tag+'';
-//     console.log(tag.nodeName);
-//     var t = tag.outerHTML;
-//     // t = t.match(/<(.*?)>.*?<\/(.*?)>/g); 
-//     console.log(t)
-//     // console.log('---> '+t.substring(t.indexOf('<'), t.indexOf('>')+1));
-//     // console.log('---> '+t.substring(t.indexOf('</'), t.indexOf('>')+1));
-//     alert(getTagName(tag.nodeName))
-//     let abre = '<'+getTagName(tag.nodeName)+'>';
-//     let fecha = '</'+getTagName(tag.nodeName)+'>';
-//     t = t.replace(abre, '');
-//     t = t.replace(fecha, '');
-//     console.log(t)
-//     // range.insertNode(t);
-//     document.execCommand('insertHTML', true, range)
-//     console.log('+++++++++++++'+range)
-// }
 
 function delElement(){
     // console.log('////////////////////////////////////////////////////////////')
@@ -126,8 +103,8 @@ function delElement(){
     // console.log(tag.nodeName);
     let pai = tag.parentNode;
     if(pai.nodeName=='DIV'){
-        console.log(pai.nodeName)
-        console.log(pai.getAttribute('id'))
+        // console.log(pai.nodeName)
+        // console.log(pai.getAttribute('id'))
         if(pai.getAttribute('id')=='texto' && pai.getAttribute('id')!=null){
             return;
         }
@@ -142,7 +119,7 @@ function delElement(){
     if(getTagName(tag.nodeName)=='p'){
         abre = '<'+getTagName(tag.nodeName)+' class="p">';
         fecha = '</'+getTagName(tag.nodeName)+'>';
-        console.log('era para ter pego o class '+tag.nodeName)
+        // console.log('era para ter pego o class '+tag.nodeName)
     }else{
         abre = '<'+getTagName(tag.nodeName)+'>';
         fecha = '</'+getTagName(tag.nodeName)+'>';
@@ -251,7 +228,7 @@ function getTags(){
     // console.log(selecao)
     var tag = selecao.parentNode;
     // console.log('111111111111111111111111-------------'+tag.nodeName)
-    console.log(getTagName(tag.nodeName))
+    // console.log(getTagName(tag.nodeName))
     return getTagName(tag.nodeName)
 }
 
@@ -435,14 +412,16 @@ function openWindowLink(){
 function link(link, target) {
     //document.execCommand("createLink", true, "https://www.google.com");
     //document.execCommand("createLink", true, link);
-    console.log(target)
+    // console.log(target)
+    document.getElementById('insertHyperLink').setAttribute('style', 'background-color:#cdcdcd;');
     selection = window.getSelection().toString();
     var link = '<a href="'+link+'"'+target+'>'+selection+'</a>';
     document.execCommand("insertHTML", true, link);
+    selectElem()
 }
 function unlink() {
-    selectElem();
     document.execCommand("unlink", false, null);
+    selectElem();
 }
 function justificar() {
     document.execCommand("justifyFull");
@@ -596,7 +575,7 @@ function CssFnctn() {
 
 function insertH(valor) {
     selection = window.getSelection().toString();
-    console.log(selection)
+    // console.log(selection)
     wrappedselection = '<'+valor+'>' + selection + '</'+valor+'>';
     //var img = new Image();
     document.execCommand('insertHTML', false, wrappedselection);
@@ -637,7 +616,7 @@ function insertTableNovo(numRow, numCol) {
 function insertTrAfter() {
     var selecao = window.getSelection().getRangeAt(0).startContainer;
     selecao = selecao.parentNode
-    console.log(selecao.nodeName+"------------")
+    // console.log(selecao.nodeName+"------------")
     if(selecao.nodeName=='TD'){
         var tbody = selecao.parentNode.parentNode;
         let tr = selecao.parentNode;
@@ -655,7 +634,7 @@ function insertTrAfter() {
 function insertTrBefore() {
     var selecao = window.getSelection().getRangeAt(0).startContainer;
     selecao = selecao.parentNode
-    console.log(selecao.nodeName+"------------")
+    // console.log(selecao.nodeName+"------------")
     if(selecao.nodeName=='TD'){
         var tbody = selecao.parentNode.parentNode;
         let tr = selecao.parentNode;
@@ -677,7 +656,7 @@ function insertTdBefore() {
     if(selecao.nodeName=='TD'){
         var tbody = selecao.parentNode.parentNode;
         let tr = selecao.parentNode;
-        console.log(',,,,,,,,,,,,,'+tbody.children[0].children.length)
+        // console.log(',,,,,,,,,,,,,'+tbody.children[0].children.length)
         let conta = 0;
         let n = selecao.previousElementSibling
         for(let j=0; j<tbody.children[0].children.length; j++){
@@ -708,28 +687,28 @@ function insertTdAfter() {
     if(selecao.nodeName=='TD'){
         var tbody = selecao.parentNode.parentNode;
         let tr = selecao.parentNode;
-        console.log(',,,,,,,,,,,,,'+tbody.children[0].children.length)
+        // console.log(',,,,,,,,,,,,,'+tbody.children[0].children.length)
         let conta = 1;
         let n = selecao.previousElementSibling
         for(let j=0; j<tbody.children[0].children.length; j++){
             if(n!=null){
                 conta++;
-                console.log(conta)
+                // console.log(conta)
             }else{
                 break;
             }
             n = n.previousElementSibling
         }
-        console.log('o numero da celula é: '+conta)
+        // console.log('o numero da celula é: '+conta)
         let obj = [];
         for(let i=0;i<tbody.children.length;i++){
             obj.push(document.createElement('td'))
         }
         for(let i=0;i<tbody.children.length;i++){
-            console.log(tbody.children[i].children[conta])
+            // console.log(tbody.children[i].children[conta])
             tbody.children[i].insertBefore(obj[i], tbody.children[i].children[conta])
         }
-        console.log('Deu certo')
+        // console.log('Deu certo')
     }
 }
 
@@ -763,7 +742,7 @@ function delTd() {
         for(let j=0; j<tbody.children[0].children.length; j++){
             if(n!=null){
                 conta++;
-                console.log(conta)
+                // console.log(conta)
             }else{
                 break;
             }
@@ -797,7 +776,16 @@ function openWindowInsertVideo(){
 function insertVideo(codVideo, si, width, height) {
     selection = window.getSelection().toString();
     //var table = '<iframe width="560" height="315" src="https://www.youtube.com/embed/dtLXZEuZbeQ?si=HdSO5bFrWUow5eNl" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>';
-    var video = '<iframe width="'+width+'" height="'+height+'" src="https://www.youtube.com/embed/'+codVideo+'?si='+si+'" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>';
+    // var video = '<iframe width="'+width+'" height="'+height+'" src="https://www.youtube.com/embed/'+codVideo+'?si='+si+'" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>';
+    var video = '<div class="item" id="item" dragstart="dragStart(event)" drag="drag(event)" dragend="dragend(event)" draggable="true" droppable="false" ondragover="allowDrop2(event)" contenteditable="false">'
+    video += '<div id="tools" draggable="false" droppable="false">'
+    video += '<button onclick="editVideo(this, event)" draggable="false" droppable="false">Editar</button>'
+    // video += '<div id="arrastar" draggable="true" droppable="false" ondragover="allowDrop(event)" contenteditable="false"></div>'
+    // video += '<div id="arrastar" dragstart="dragStart(event)" drag="drag(event)" dragend="dragend(event)" draggable="true" droppable="false" contenteditable="false"></div>'
+    video += '<button onclick="fecharJanVid(this)" draggable="false" droppable="false">X</button>'
+    video += '</div>'
+    video += '<iframe width="'+width+'" height="'+height+'" src="https://www.youtube.com/embed/'+codVideo+'?si='+si+'" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>';
+    video += '</div>'
     //var video = window.prompt("Insira no campo abaixo o iframe de incorporação do vídeo do youtube", "");
     document.execCommand('insertHTML', false, video);
 }
@@ -824,7 +812,7 @@ function insertImg2() {
 function addHs(){
     document.getElementById('formatH').addEventListener('change', function() {
         var selectedOption = this.children[this.selectedIndex];
-        console.log(selectedOption)
+        // console.log(selectedOption)
     /* var value = this.value;
         var param = selectedOption.getAttribute("data-param");
 

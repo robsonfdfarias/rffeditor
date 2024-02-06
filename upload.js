@@ -73,9 +73,16 @@ function insertImg() {
   width = img.getAttribute("width");
   height = img.getAttribute("height");
   selection = window.getSelection().toString();
-  //var imagem = '<img src="'+srcImg+'" width="'+width+'" height="'+height+'" onclick="editImg(this)" class="imagem">';
-  var imagem = '<img src="'+srcImg+'" width="'+width+'" height="'+height+'" onclick="openWindowEditImage(this)" class="imagem">';
-  document.execCommand('insertHTML', false, imagem);
+  var media = '<div class="item" id="item" dragstart="dragStart(event)" drag="drag(event)" dragend="dragend(event)" draggable="true" droppable="false" ondragover="allowDrop2(event)" contenteditable="false">'
+  media += '<div id="tools" draggable="false" droppable="false">'
+  media += '<button onclick="editVideo(this, event)" draggable="false" droppable="false">Editar</button>'
+    // media += '<div id="arrastar" dragstart="dragStart(event)" drag="drag(event)" dragend="dragend(event)" draggable="true" droppable="false" contenteditable="false"></div>'
+    media += '<button onclick="fecharJanVid(this)" draggable="false" droppable="false">X</button>'
+    media += '</div>'
+    media += '<img src="'+srcImg+'" width="'+width+'" height="'+height+'" onclick="openWindowEditImage(this)" class="imagem">';
+    media += '</div>'
+  // var imagem = '<img src="'+srcImg+'" width="'+width+'" height="'+height+'" onclick="openWindowEditImage(this)" class="imagem">';
+  document.execCommand('insertHTML', false, media);
 }
 /*
 window.addEventListener("click", function(){
