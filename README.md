@@ -48,7 +48,14 @@ Obs.: Não altere nenhum tag e nem mude o nome.
 
 ><h2>Obs</h2>
 >Essa é uma versão atualizada do editor que eu criei junto com o FAQ <pre>(https://github.com/robsonfdfarias/FAQ | commit de 30/01/2024 - 4f41c20).</pre> Eu atualizei o FAQ para pegar daqui do meu github o editor para um melhor controle da versão e para uso em outros aplicativos.
-  
+
+
+
+<h2>Ultimas atualizações</h2>
+<h3>Mover, editar(largura e altura) e excluir imagem e/ou vídeo</h3>
+<img src="imgs/move-edita-exclui-img-vid.gif" width="100%">
+
+
 <h2>☺Autor</h2>
 <strong>Robson Ferreira de Farias</strong><br>
 <ul>
