@@ -5,6 +5,7 @@
 
 <title>Editor de Texto JavaScript ::: Linha de Código (Robson Farias)</title>
     <link rel="stylesheet" type="text/css" href="rffeditor/editorRobsonFarias.css" />
+    <link rel="stylesheet" type="text/css" href="rffeditor/janMovEdiExc.css" />
 <style>
     .tabela tr td{
         padding: 10px;
