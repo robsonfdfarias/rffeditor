@@ -87,6 +87,11 @@
     background-image: url('imgEditor/arrastar.png');
     background-repeat: no-repeat;
     background-position: right top;
+    cursor:move;
+}
+
+.item img {
+    cursor: default;
 }
 
 .item:hover #tools{
