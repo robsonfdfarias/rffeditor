@@ -55,6 +55,9 @@ Obs.: Não altere nenhum tag e nem mude o nome.
 <h3>Mover, editar(largura e altura) e excluir imagem e/ou vídeo</h3>
 <img src="imgs/move-edita-exclui-img-vid.gif" width="100%">
 
+<h3>Editar largura e altura (recursos novos) da imagem e/ou vídeo</h3>
+<img src="imgs/Recurso-resize-img-vid-e-caixa-de-texto.gif" width="100%">
+
 
 <h2>☺Autor</h2>
 <strong>Robson Ferreira de Farias</strong><br>

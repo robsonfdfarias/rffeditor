@@ -72,9 +72,14 @@
     background-color: rgb(255, 255, 255);
     position: relative;
     width: fit-content;
+    height: 200px;
     background-image: none;
     /* background-size: contain; */
-    background-position: 120% top;
+    /* background-position: 120% top; */
+    background-position: calc(100%+45px) top;
+    resize: both;
+    overflow: auto;
+    box-sizing: border-box;
 }
 
 .item:hover {

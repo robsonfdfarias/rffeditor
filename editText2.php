@@ -44,12 +44,16 @@
     }
 
     #texto{
-        min-height: 300px;
+        /* min-height: 300px; */
+        height: 300px;
         width: calc(100%-20px);
         box-shadow: 0 0 2px rgba(0,0,0,0.5);
         border:0px solid #000;
         padding: 15px;
         border-radius: 10px;
+        resize: vertical;
+        overflow: auto;
+        box-sizing: border-box;
     }
 
     #cores{
@@ -391,8 +395,8 @@
     
 
 <div id="editVideo">
-    <input type="text" name="larg" id="larg">
-    <input type="text" name="alt" id="alt">
+    <input type="number" name="larg" id="larg">
+    <input type="number" name="alt" id="alt">
     <button onclick="salveUpdateIframe()">alterar</button>
     <button onclick="cancelEditMedia()">Cancelar</button>
 </div>
@@ -545,7 +549,10 @@
     
 
 </div>
-<div id="texto" contenteditable="true" autofocus required autocomplete="off" spellcheck="true" class="box"><div>Digite o seu artigo aqui...</div></div>
+<div id="conteiner">
+    <div id="texto" contenteditable="true" autofocus required autocomplete="off" spellcheck="true" class="box"><div>Digite o seu artigo aqui...</div></div>
+    
+</div>
 
 
         <div id="preview"></div>
@@ -587,7 +594,7 @@
         divCorDestText.setAttribute('style', 'display:none;');
     }
 
-    var frame = '';
+    var nodePai = '';    
 
     function editVideo(ob, event){
         //
@@ -596,14 +603,26 @@
         let pai = ob.parentNode;
         let paipai = pai.parentNode;
         let position = paipai.getBoundingClientRect();
+        // console.log(position)
         janVideoEdit.setAttribute('style', 'display:block; top:'+position.y+'px; left:'+position.x+'px;');
-        // console.log(paipai)
-        // console.log(paipai.getBoundingClientRect())
-        let ifr = paipai.children[1]
-        // console.log(ifr.getAttribute('width'))
-        document.getElementById('larg').value = ifr.getAttribute('width');
-        document.getElementById('alt').value = ifr.getAttribute('height');
-        frame=ifr;
+        // let ifr = paipai.children[1]
+        let valores = paipai.getAttribute('style');
+        valores = valores.split(';');
+        let l='';
+        let a='';
+        // console.log('------------'+valores)
+        for(let i=0; i<valores.length;i++){
+            let item = valores[i].split(':');
+            // console.log(item)
+            if(item[0].includes("width")){
+                l=item[1].replace(' ', '').replace('px', '');
+            }else if(item[0].includes("height")){
+                a=item[1].replace(' ', '').replace('px', '');
+            }
+        }
+        document.getElementById('larg').value = l;
+        document.getElementById('alt').value = a;
+        nodePai = paipai;
     }
 
     function cancelEditMedia(){
@@ -612,12 +631,11 @@
 
     function salveUpdateIframe(){
         // console.log('....................................................................')
-        // console.log(frame)
         let larg = document.getElementById('larg').value;
         let alt = document.getElementById('alt').value;
-        frame.setAttribute('width', larg);
-        frame.setAttribute('height', alt);
+        nodePai.setAttribute('style', 'width: '+larg+'px; height: '+alt+'px;');
         document.getElementById('editVideo').setAttribute('style', 'display:none;')
+        cancelEditMedia()
     }
 
 </script>

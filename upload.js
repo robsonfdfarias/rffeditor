@@ -67,19 +67,40 @@ console.log(i)
 
 
 
+// function insertImg() {
+//   var img = document.getElementById("previewImage");
+//   srcImg = img.getAttribute("src");
+//   width = img.getAttribute("width");
+//   height = img.getAttribute("height");
+//   selection = window.getSelection().toString();
+//   var media = '<div class="item" id="item" dragstart="dragStart(event)" drag="drag(event)" dragend="dragend(event)" draggable="true" droppable="false" ondragover="allowDrop2(event)" contenteditable="false">'
+//   media += '<div id="tools" draggable="false" droppable="false">'
+//   media += '<button onclick="editVideo(this, event)" draggable="false" droppable="false">Editar</button>'
+//     // media += '<div id="arrastar" dragstart="dragStart(event)" drag="drag(event)" dragend="dragend(event)" draggable="true" droppable="false" contenteditable="false"></div>'
+//     media += '<button onclick="fecharJanVid(this)" draggable="false" droppable="false">X</button>'
+//     media += '</div>'
+//     media += '<img src="'+srcImg+'" width="'+width+'" height="'+height+'" onclick="openWindowEditImage(this)" class="imagem">';
+//     media += '</div>'
+//   // var imagem = '<img src="'+srcImg+'" width="'+width+'" height="'+height+'" onclick="openWindowEditImage(this)" class="imagem">';
+//   document.execCommand('insertHTML', false, media);
+// }
+
+
+
 function insertImg() {
   var img = document.getElementById("previewImage");
   srcImg = img.getAttribute("src");
   width = img.getAttribute("width");
   height = img.getAttribute("height");
   selection = window.getSelection().toString();
-  var media = '<div class="item" id="item" dragstart="dragStart(event)" drag="drag(event)" dragend="dragend(event)" draggable="true" droppable="false" ondragover="allowDrop2(event)" contenteditable="false">'
+  var media = '<div class="item" id="item" dragstart="dragStart(event)" drag="drag(event)" dragend="dragend(event)" draggable="true" droppable="false" ondragover="allowDrop2(event)" contenteditable="false" style="width:'+width+'; height:'+height+';">'
   media += '<div id="tools" draggable="false" droppable="false">'
   media += '<button onclick="editVideo(this, event)" draggable="false" droppable="false">Editar</button>'
     // media += '<div id="arrastar" dragstart="dragStart(event)" drag="drag(event)" dragend="dragend(event)" draggable="true" droppable="false" contenteditable="false"></div>'
     media += '<button onclick="fecharJanVid(this)" draggable="false" droppable="false">X</button>'
     media += '</div>'
-    media += '<img src="'+srcImg+'" width="'+width+'" height="'+height+'" onclick="openWindowEditImage(this)" class="imagem">';
+    // media += '<img src="'+srcImg+'" width="'+width+'" height="'+height+'" onclick="openWindowEditImage(this)" class="imagem">';
+    media += '<img src="'+srcImg+'" width="98%" height="98%" onclick="openWindowEditImage(this)" class="imagem">';
     media += '</div>'
   // var imagem = '<img src="'+srcImg+'" width="'+width+'" height="'+height+'" onclick="openWindowEditImage(this)" class="imagem">';
   document.execCommand('insertHTML', false, media);
