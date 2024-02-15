@@ -453,7 +453,13 @@
 </div> -->
 
 <div id="ferramentas">
-    <!-- <button id="testeSel" onclick="delElement()">Sel</button> -->
+    <button id="testeSel" onclick="merge('row', 'add')">Mesclar com a do lado</button>
+    <button id="testeSel" onclick="merge('column', 'add')">Mesclar com a debaixo</button>
+    <button id="testeSel" onclick="merge('row', 'remove')">UnMerge com a do lado</button>
+    <button id="testeSel" onclick="merge('column', 'remove')">UnMerge com a debaixo</button>
+    <button id="testeSel" onclick="getWindowBckgroundColorTDsel()">backGroundColorTdSel</button>
+    <button id="testeSel" onclick="borderTdSel('sc')">borderTdSel</button>
+    <button id="testeSel" onclick="rotateTdSel('sc')">rotateTdSel</button>
     <!-- <button id="testeSel" onclick="getTags()">getTags</button> -->
     <!-- <button id="testeSel" onclick="fontFaceSel('monospace')">corrie</button> -->
     <select name="typefontface" id="typefontface">

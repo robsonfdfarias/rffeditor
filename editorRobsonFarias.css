@@ -7,11 +7,65 @@
     src: url('fontes/Josefin_Sans/JosefinSans-VariableFont_wght.ttf') format('truetype');
 }
 
-.tabela tr td{
+.tabela tbody tr td{
     padding: 10px;
+    display: table-cell;
+    vertical-align: inherit;
+    caret-color: red;
+    caret-shape: block;
+    overflow-wrap: break-word; /* quebra o texto para não passar do limite da caixa de texto  */
+    word-wrap: break-word; /* Permite que palavras longas sejam quebradas para não passar do limite da caixa de texto  */
+    box-sizing: border-box;
+    border: 1px solid #000;
 }
+
+.tabela tbody tr:first-child td{
+    resize: horizontal;
+    overflow: auto;
+    box-sizing: border-box;
+}
+
+
+.tabela tbody tr:first-child td:first-child{
+    resize: none;
+} 
+
+
+#tabelaInserida{
+    border: 0px solid #fff;
+}
+#tableTdInicialSmall {
+    width: 1px !important; 
+    background-color: #fff; 
+    resize: none; 
+    overflow: none; 
+    box-sizing: border-box;
+    border: 1px solid #fff;
+    padding: 0;
+}
+
+#tableTdInicialLarg {
+    height:1px !important; 
+    /* width: 100px !important;  */
+    background-color: #fff;
+    border: 1px solid #fff;
+    padding: 0;
+}
+
+#tableTdInicialPoint{
+    height:1px !important; 
+    width: 1px !important; 
+    background-color: #fff;
+    border: 1px solid #fff;
+    padding: 0;
+}
+
 .table{
     margin:0px;
+    table-layout: fixed;
+    box-sizing: border-box;
+    /* width: 100%;
+    height: 100%; */
 }
 
 #texto{
@@ -21,6 +75,8 @@
     border:0px solid #000;
     padding: 15px;
     border-radius: 10px;
+    overflow-wrap: break-word; /* quebra o texto para não passar do limite da caixa de texto  */
+    word-wrap: break-word; /* Permite que palavras longas sejam quebradas para não passar do limite da caixa de texto  */
 }
 
 #cores{

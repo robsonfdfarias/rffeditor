@@ -114,3 +114,61 @@
 }
 
 /******************************** FIM da configuração da janela de vídeo ***************************************/
+
+/* .table {
+    resize: both;
+    overflow: auto;
+    box-sizing: border-box;
+} */
+
+
+
+#tableTdInicialSmall {
+    /* display: revert; */
+    width: 20px !important; 
+    background-color: #cdcdcd; 
+    resize: vertical !important; 
+    overflow: auto; 
+    box-sizing: border-box;
+    border: 1px solid #000;
+}
+
+#tableTdInicialLarg {
+    height:20px !important; 
+    /* width: 100px;  */
+    width:100px;
+    background-color: #cdcdcd;
+    border: 1px solid #000;
+    resize: horizontal;
+    overflow: auto;
+    box-sizing: border-box;
+}
+
+#tableTdInicialPoint{
+    height:20px !important; 
+    width: 20px !important; 
+    background-color: #cdcdcd;
+    border: 1px solid #000;
+}
+
+.tabela tbody tr:first-child td:first-child{
+    resize: none;
+}
+
+.tabela tbody tr:first-child td{
+    resize: horizontal;
+    overflow: auto;
+    box-sizing: border-box;
+}
+
+.tabela tbody tr td:focus-visible{
+    background-color: #bef4fd;
+    border: 1px solid #029669;
+}
+
+.selectedCel{
+    /* background-color: #c1f364; */
+    box-shadow: inset 0 0 10px #02859c, inset 0 0 10px #017a8f, inset 0 0 10px #026a7c
+    , inset 0 0 10px #014d5a, inset 0 0 10px #00333b, inset 0 0 10px #02859c
+    , inset 0 0 10px #014d5a, inset 0 0 10px #00333b, inset 0 0 10px #02859c;
+}
