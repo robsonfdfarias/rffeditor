@@ -1,17 +1,22 @@
 <?php
 
 //$pasta = filter_input(INPUT_GET, $_GET['pasta'], FILTER_SANITIZE_SPECIAL_CHARS);
-$pasta = $_GET['pasta'];
+$pasta2 = $_GET['pasta'];
+$pasta = '../../'.$pasta2;
 
-$pp1 = explode('/', $pasta);
+$pp1 = explode('/', $pasta2);
 //print_r($pp);
 $pp = array_filter($pp1, function($value){
     return ($value !==null && $value !== false && $value !== '' && $value !== ' ');
-});
+}); 
 //print_r($pp);
-$acumula = '..';
-for($i=1; $i<count($pp); $i++){
-    $acumula.='/'.$pp[$i];
+$acumula = '';
+for($i=0; $i<count($pp); $i++){
+    if($i==0){
+        $acumula.=$pp[$i];
+    }else{
+        $acumula.='/'.$pp[$i];
+    }
     //echo '<span style="padding: 0 10px;"><a onclick="clickFile(\'pasta\', \''.$acumula.'\')">'.$pp[$i].'</a></span>';
     echo '<a onclick="clickFile(\'pasta\', \''.$acumula.'\')">'.$pp[$i].'</a>';
     if(count($pp)>2 && $i<(count($pp)-1)){
@@ -31,7 +36,7 @@ while($arquivo=$dir->read()){
     if(is_dir($cc)){
         if($arquivo!="." && $arquivo!=".." && $arquivo!='' && $arquivo!=null && $arquivo!='undefined'){
             echo '<div class="pasta" style="width:200px; padding:0; word-break: break-all; margin: 0 15px;">';
-            echo '<a onclick="clickFile(\'pasta\', \''.$pasta.'/'.$arquivo.'\')"><img src="./imgs/pasta.png" width="200"></a>';
+            echo '<a onclick="clickFile(\'pasta\', \''.$pasta2.'/'.$arquivo.'\')"><img src="./imgs/pasta.png" width="200"></a>';
             echo '<br>'.$arquivo;
             echo '</div>';
         }else{

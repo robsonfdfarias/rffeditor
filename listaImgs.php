@@ -11,7 +11,7 @@
     <div id="lista" style="max-width:100%;  background-color: white; padding:20px;"></div>
 
     <script>
-        var folder = '../../imagens';
+        var folder = 'imagens';
         function getListFiles(files){
             const xhttp = new XMLHttpRequest();
             xhttp.onload=function(){

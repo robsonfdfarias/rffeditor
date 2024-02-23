@@ -55,6 +55,7 @@
         overflow: auto;
         box-sizing: border-box;
     }
+    
 
     #cores{
         background-color: green;
@@ -397,9 +398,11 @@
 <div id="editVideo">
     <input type="number" name="larg" id="larg">
     <input type="number" name="alt" id="alt">
+    <span id="tipoObj" style="display:none;"></span>
     <button onclick="salveUpdateIframe()">alterar</button>
     <button onclick="cancelEditMedia()">Cancelar</button>
 </div>
+
 <div id="efeitosTexto">
     <div id="topEfeitoTexto">
         <div id="tituloEfeitoTexto">Efeitos de texto</div>
@@ -453,15 +456,19 @@
 </div> -->
 
 <div id="ferramentas">
-    <button id="testeSel" onclick="merge('row', 'add')">Mesclar com a do lado</button>
+    <!-- <button id="testeSel" onclick="merge('row', 'add')">Mesclar com a do lado</button>
     <button id="testeSel" onclick="merge('column', 'add')">Mesclar com a debaixo</button>
     <button id="testeSel" onclick="merge('row', 'remove')">UnMerge com a do lado</button>
-    <button id="testeSel" onclick="merge('column', 'remove')">UnMerge com a debaixo</button>
-    <button id="testeSel" onclick="getWindowBckgroundColorTDsel()">backGroundColorTdSel</button>
+    <button id="testeSel" onclick="merge('column', 'remove')">UnMerge com a debaixo</button> -->
+    <!-- <button id="testeSel" onclick="getWindowBckgroundColorTDsel()">backGroundColorTdSel</button>
     <button id="testeSel" onclick="borderTdSel('sc')">borderTdSel</button>
-    <button id="testeSel" onclick="rotateTdSel('sc')">rotateTdSel</button>
+    <button id="testeSel" onclick="rotateTdSel('sc')">rotateTdSel</button> -->
+    <!-- <button id="testeSel" onclick="insertCellLeft()">insertCellLeft</button>
+    <button id="testeSel" onclick="insertCellRight()">insertCellRight</button>
+    <button id="testeSel" onclick="removeCell()">removeCell</button> -->
     <!-- <button id="testeSel" onclick="getTags()">getTags</button> -->
-    <!-- <button id="testeSel" onclick="fontFaceSel('monospace')">corrie</button> -->
+    <!-- <button id="testeSel" onclick="console.log(verifyGetNode('DIV'))">Pegar div</button> -->
+
     <select name="typefontface" id="typefontface">
         <option value="padrao" name="padrao" id="padrao"  disabled selected>Font</option>
         <option value="monospace" name="monospace" id="monospace">Monospace</option>
@@ -539,12 +546,12 @@
     <img src="rffeditor/imgEditor/graphic.svg" title="Inserir Imagem" onClick="openWindowInsertImage()" />
     <img src="rffeditor/imgEditor/editImage.svg" title="Acrescentar a função de editar as imagens" onClick="funcBtImg()" />
     <img src="rffeditor/imgEditor/inserttable.svg" title="Inserir tabela" onClick="insertTable()" />
-    <img src="rffeditor/imgEditor/inserttableColumnAfter.svg" title="Inserir coluna depois da coluna selecionada" onClick="insertTdAfter()" unselectable="on" spaw_state="true"/>
+    <!-- <img src="rffeditor/imgEditor/inserttableColumnAfter.svg" title="Inserir coluna depois da coluna selecionada" onClick="insertTdAfter()" unselectable="on" spaw_state="true"/>
     <img src="rffeditor/imgEditor/inserttableColumnBefore.svg" title="Inserir coluna antes da coluna selecionada" onClick="insertTdBefore()" unselectable="on" spaw_state="true"/>
     <img src="rffeditor/imgEditor/inserttableRowAfter.svg" title="Inserir linha depois da linha selecionada" onClick="insertTrAfter()" unselectable="on" spaw_state="true"/>
     <img src="rffeditor/imgEditor/inserttableRowBefore.svg" title="Inserir linha antes da linha selecionada" onClick="insertTrBefore()" unselectable="on" spaw_state="true"/>
     <img src="rffeditor/imgEditor/deleteTableColumn.svg" title="Excluir coluna selecionada" onClick="delTd()" unselectable="on" spaw_state="true"/>
-    <img src="rffeditor/imgEditor/deleteTableRowAfter.svg" title="Excluir linha selecionada" onClick="delTr()" unselectable="on" spaw_state="true"/>
+    <img src="rffeditor/imgEditor/deleteTableRowAfter.svg" title="Excluir linha selecionada" onClick="delTr()" unselectable="on" spaw_state="true"/> -->
 
     <!-- <img src="rffeditor/imgEditor/inserthyperlinkcontrol.svg" title="Inserir hiperlink" onClick="openWindowLink(), this.setAttribute('style', 'background-color:#cdcdcd;'), selectElem()" id="insertHyperLink" /> -->
     <img src="rffeditor/imgEditor/inserthyperlinkcontrol.svg" title="Inserir hiperlink" onClick="openWindowLink()" id="insertHyperLink" />
@@ -602,16 +609,19 @@
 
     var nodePai = '';    
 
-    function editVideo(ob, event){
-        //
+    function editVideo(ob, event, tipoObj){
+        document.getElementById('tipoObj').innerHTML = tipoObj;
         const janVideoEdit = document.getElementById('editVideo');
         // console.log(ob)
         let pai = ob.parentNode;
+        // console.log(pai)
         let paipai = pai.parentNode;
+        // console.log(paipai)
         let position = paipai.getBoundingClientRect();
         // console.log(position)
         janVideoEdit.setAttribute('style', 'display:block; top:'+position.y+'px; left:'+position.x+'px;');
         // let ifr = paipai.children[1]
+        // console.log(paipai.getAttribute('style'))
         let valores = paipai.getAttribute('style');
         valores = valores.split(';');
         let l='';
@@ -639,7 +649,22 @@
         // console.log('....................................................................')
         let larg = document.getElementById('larg').value;
         let alt = document.getElementById('alt').value;
-        nodePai.setAttribute('style', 'width: '+larg+'px; height: '+alt+'px;');
+        if(document.getElementById('tipoObj').innerHTML=='img'){
+            if(alt==''){
+                alt='auto'
+            }else{
+                alt=alt+'px'
+            }
+            if(larg==''){
+                larg='auto'
+            }else{
+                larg=larg+'px'
+            }
+        }else{
+            larg=larg+'px'
+            alt=alt+'px'
+        }
+        nodePai.setAttribute('style', 'width: '+larg+'; height: '+alt+';');
         document.getElementById('editVideo').setAttribute('style', 'display:none;')
         cancelEditMedia()
     }

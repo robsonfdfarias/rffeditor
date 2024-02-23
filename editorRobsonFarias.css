@@ -36,7 +36,7 @@
 }
 #tableTdInicialSmall {
     width: 1px !important; 
-    background-color: #fff; 
+    background-color: #fff;
     resize: none; 
     overflow: none; 
     box-sizing: border-box;
@@ -77,6 +77,16 @@
     border-radius: 10px;
     overflow-wrap: break-word; /* quebra o texto para não passar do limite da caixa de texto  */
     word-wrap: break-word; /* Permite que palavras longas sejam quebradas para não passar do limite da caixa de texto  */
+    scrollbar-width:thin;
+    scroll-behavior: smooth;
+    scrollbar-color: rgba(194,204,158,0.5) rgba(12,88,44,0.2);
+    transition: all ease-in-out 0.5s;
+}
+
+#texto:hover{
+    scrollbar-color: #b1cd49 #0c582c;
+    scrollbar-face-color: #000;
+    transition: all ease-in-out 0.5s;
 }
 
 #cores{
@@ -734,3 +744,8 @@ rffEfeitoBGText {
 
 
 /******************************** FIM da configuração da janela de vídeo ***************************************/
+
+
+.configTable{
+    display: none;
+}

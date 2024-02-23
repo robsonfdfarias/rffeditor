@@ -376,7 +376,9 @@ quadro.addEventListener('keydown', function(e){
     selectElem();
 })
 quadro.addEventListener('mouseup', function(){
+    console.log(tags)
     selectElem();
+    verifyElementFocus();
 })
 
 
@@ -549,7 +551,6 @@ function insertTagsNew(valor) {
         exit;
     }
     selection = window.getSelection().toString();
-    // console.log(selection)
     wrappedselection = '<'+valor+'>' + selection + '</'+valor+'>';
     //var img = new Image();
     document.execCommand('insertHTML', false, wrappedselection);
@@ -593,11 +594,9 @@ function insertH(valor) {
 /********************************* Cria e edita tabela INICIO ***************************************************/
 
 
-// function insertTableOld() {
-//     selection = window.getSelection().toString();
-//     var table = '<table border="1" cellspacing="0" class="tabela"><tr><td><td><td></tr><tr><td><td><td></tr><tr><td><td><td></tr></table>';
-//     document.execCommand('insertHTML', false, table);
-// }
+/////////////////////////////////////////////////////////
+/************ Cria a tabela e o menu junto *************/
+/////////////////////////////////////////////////////////
 
 function insertTable() {
     window.open("rffeditor/windowInsertTable.php", 'janela', 'height=350, width=500, top=50, left=100, scrollbar=no, fullscreen=no');
@@ -606,9 +605,154 @@ function insertTable() {
 var styleFirstColumn = 'width: 10px !important; background-color: #cdcdcd; resize: vertical !important; overflow: auto; box-sizing: border-box;';
 
 
+// function insertTableNovo(numRow, numCol) {
+//     selection = window.getSelection().toString();
+//     var table ='<div class="tabelaObj" contenteditable="false" spellcheck="false"><div class="configTable" contenteditable="false" spellcheck="false">'
+//     // table+='<button id="testeSel" onclick="merge(\'row\', \'add\')"><img src="rffeditor/imgEditor/mesclar-celula.svg" width="50" title="Opções de mesclagem"></button>';
+//     table+='<ul id="menuTable">';
+//     table+='<li><img src="rffeditor/imgEditor/mesclar-celula.svg" height="40" title="Opções de mesclagem">';
+//     table+='<ul>';
+//     table+='<li><button id="testeSel" onclick="merge(\'row\', \'add\')"><img src="rffeditor/imgEditor/mesclar-lado.svg" height="40" title="Mesclar célula a direita"></button></li>';
+//     table+='<li><button id="testeSel" onclick="merge(\'column\', \'add\')"><img src="rffeditor/imgEditor/mesclar-abaixo.svg" height="40" title="Mesclar célula abaixo"></button></li>';
+//     table+='<li><button id="testeSel" onclick="merge(\'row\', \'remove\')"><img src="rffeditor/imgEditor/mesclar-remover-lado.svg" height="40" title="Remove mesclagem a direita"></button></li>';
+//     table+='<li><button id="testeSel" onclick="merge(\'column\', \'remove\')"><img src="rffeditor/imgEditor/mesclar-remover-abaixo.svg" height="40" title="Remover mesclagem abaixo"></button></li>';
+//     table+='</ul>';
+//     table+='</li>';
+
+//     table+='<li><img src="rffeditor/imgEditor/configRow.svg" height="40" title="Configuração de linha">';
+//     table+='<ul>';
+//     table+='<li><button id="testeSel" onclick="insertTrAfter()"><img src="rffeditor/imgEditor/inserttableRowAfter.svg" height="40" title="Inserir linha depois"></li>';
+//     table+='<li><button id="testeSel" onclick="insertTrBefore()"><img src="rffeditor/imgEditor/inserttableRowBefore.svg" height="40" title="Inserir linha antes"></li>';
+//     table+='<li><button id="testeSel" onclick="delTr()"><img src="rffeditor/imgEditor/deleteTableRowAfter.svg" height="40" title="Apagar linha"></li>';
+//     // table+='<li><button id="testeSel" onclick="insertTrAfter()">Inserir linha depois</button></li>';
+//     // table+='<li><button id="testeSel" onclick="insertTrBefore()">Inserir linha antes</button></li>';
+//     // table+='<li><button id="testeSel" onclick="delTr()">Apagar linha</button></li>';
+//     table+='</ul>';
+//     table+='</li>';
+
+//     table+='<li><img src="rffeditor/imgEditor/configColumn.svg" height="40" title="Configuração de coluna">';
+//     table+='<ul>';
+//     table+='<li><button id="testeSel" onclick="insertTdAfter()"><img src="rffeditor/imgEditor/inserttableColumnAfter.svg" height="40" title="Inserir coluna depois"></button></li>';
+//     table+='<li><button id="testeSel" onclick="insertTdBefore()"><img src="rffeditor/imgEditor/inserttableColumnBefore.svg" height="40" title="Inserir coluna antes"></button></li>';
+//     table+='<li><button id="testeSel" onclick="delTd()"><img src="rffeditor/imgEditor/deleteTableColumn.svg" height="40" title="Apagar coluna"></button></li>';
+//     table+='</ul>';
+//     table+='</li>';
+
+//     table+='<li><img src="rffeditor/imgEditor/configCell.svg" height="40" title="Configurar célula">';
+//     table+='<ul>';
+//     // table+='<li><button id="testeSel" onclick="rotateTdSel(\'sc\')"><img src="rffeditor/imgEditor/configCell-rotate-text.svg" height="40" title="Rotacionar o texto na célula"></button></li>';
+//     // table+='<li><button id="testeSel" onclick="getWindowBckgroundColorTDsel()"><img src="rffeditor/imgEditor/configCell-background.svg" height="40" title="Mudar a cor da célula"></button></li>';
+//     // table+='<li><button id="testeSel" onclick="openConfigBorderTdSel()"><img src="rffeditor/imgEditor/configCell-border.svg" height="40" title="Configurar borda da célula"></button></li>';
+//     table+='<li><button id="testeSel" onclick="openConfigTdSel()"><img src="rffeditor/imgEditor/configCell-prop.svg" height="40" title="Configurar propriedade da célula"></button></li>';
+
+//     table+='<li><button id="testeSel" onclick="insertCellRight()"><img src="rffeditor/imgEditor/configCell-insert-after.svg" height="40" title="Inserir célula depois"></button></li>';
+//     table+='<li><button id="testeSel" onclick="insertCellLeft()"><img src="rffeditor/imgEditor/configCell-insert-before.svg" height="40" title="Inserir célula antes"></button></li>';
+//     table+='<li><button id="testeSel" onclick="removeCell()"><img src="rffeditor/imgEditor/configCell-delete.svg" height="40" title="Apagar célula"></button></li>';
+//     table+='</ul>';
+//     table+='</li>';
+
+//     table+='<li><img src="rffeditor/imgEditor/configTable.svg" height="40" title="Configurar tabela">';
+//     table+='<ul>';
+//     table+='<li><button id="testeSel" onclick="insertTdAfter()"><img src="rffeditor/imgEditor/inserttableColumnAfter.svg" height="40" title="Inserir coluna depois"></button></li>';
+//     table+='<li><button id="testeSel" onclick="insertTdBefore()"><img src="rffeditor/imgEditor/inserttableColumnBefore.svg" height="40" title="Inserir coluna antes"></button></li>';
+//     table+='<li><button id="testeSel" onclick="delTd()"><img src="rffeditor/imgEditor/deleteTableColumn.svg" height="40" title="Apagar coluna"></button></li>';
+//     table+='</ul>';
+//     table+='</li>';
+//     table+='</ul>';
+//     table+='</div>';
+//     table += '<table cellspacing="0" class="tabela" id="tabelaInserida" onkeydown="keydownTable(event, this)" onkeyup="keyupTable(event, this)">';
+//     for(i=0; i<=numRow; i++){
+//         table+='<tr contenteditable="false" spellcheck="false">';
+//         // table+='<tr contenteditable="false" spellcheck="false">';
+//         if(i==0){
+//             for(j=0;j<=numCol;j++){
+//                 if(j==0){
+//                     table+='<td style="" contenteditable="false" spellcheck="false" id="tableTdInicialPoint"></td>';
+//                 }else{
+//                     table+='<td contenteditable="false" spellcheck="false" id="tableTdInicialLarg" style=""></td>';
+//                 }
+//             }
+//         }else{
+//             for(j=0;j<=numCol;j++){
+//                 if(j==0){
+//                     // table+='<td style="'+styleFirstColumn+'" contenteditable="false" spellcheck="false" id="tableTdInicialSmall"></td>';
+//                     table+='<td contenteditable="false" spellcheck="false" id="tableTdInicialSmall"></td>';
+//                 }else{
+//                     table+='<td style="" contenteditable="true" spellcheck="true" onclick="actionClickTd(this)" class="">&nbsp;</td>';
+//                     // table+='<td contenteditable="true" spellcheck="true">&nbsp;</td>';
+//                 }
+//             }
+//         }
+//         table+='</tr>';
+//     }
+//     table+='</table></div>';
+//     document.execCommand('insertHTML', false, table);
+// }
+
+
+
+
 function insertTableNovo(numRow, numCol) {
+    let range = window.getSelection().getRangeAt(0);
     selection = window.getSelection().toString();
-    var table = '<table cellspacing="0" class="tabela" id="tabelaInserida" onkeydown="keydownTable(event, this)" onkeyup="keyupTable(event, this)">';
+    let divPai = document.createElement('div');
+    divPai.setAttribute('contenteditable', 'false');
+    divPai.setAttribute('spellcheck', 'false');
+    divPai.setAttribute('class', 'tabelaObj');
+    var table ='<div class="configTable" contenteditable="false" spellcheck="false">'
+    // table+='<button id="testeSel" onclick="merge(\'row\', \'add\')"><img src="rffeditor/imgEditor/mesclar-celula.svg" width="50" title="Opções de mesclagem"></button>';
+    table+='<ul id="menuTable">';
+    table+='<li><img src="rffeditor/imgEditor/mesclar-celula.svg" height="40" title="Opções de mesclagem">';
+    table+='<ul>';
+    table+='<li><button id="testeSel" onclick="merge(\'row\', \'add\')"><img src="rffeditor/imgEditor/mesclar-lado.svg" height="40" title="Mesclar célula a direita"></button></li>';
+    table+='<li><button id="testeSel" onclick="merge(\'column\', \'add\')"><img src="rffeditor/imgEditor/mesclar-abaixo.svg" height="40" title="Mesclar célula abaixo"></button></li>';
+    table+='<li><button id="testeSel" onclick="merge(\'row\', \'remove\')"><img src="rffeditor/imgEditor/mesclar-remover-lado.svg" height="40" title="Remove mesclagem a direita"></button></li>';
+    table+='<li><button id="testeSel" onclick="merge(\'column\', \'remove\')"><img src="rffeditor/imgEditor/mesclar-remover-abaixo.svg" height="40" title="Remover mesclagem abaixo"></button></li>';
+    table+='</ul>';
+    table+='</li>';
+
+    table+='<li><img src="rffeditor/imgEditor/configRow.svg" height="40" title="Configuração de linha">';
+    table+='<ul>';
+    table+='<li><button id="testeSel" onclick="insertTrAfter()"><img src="rffeditor/imgEditor/inserttableRowAfter.svg" height="40" title="Inserir linha depois"></li>';
+    table+='<li><button id="testeSel" onclick="insertTrBefore()"><img src="rffeditor/imgEditor/inserttableRowBefore.svg" height="40" title="Inserir linha antes"></li>';
+    table+='<li><button id="testeSel" onclick="delTr()"><img src="rffeditor/imgEditor/deleteTableRowAfter.svg" height="40" title="Apagar linha"></li>';
+    // table+='<li><button id="testeSel" onclick="insertTrAfter()">Inserir linha depois</button></li>';
+    // table+='<li><button id="testeSel" onclick="insertTrBefore()">Inserir linha antes</button></li>';
+    // table+='<li><button id="testeSel" onclick="delTr()">Apagar linha</button></li>';
+    table+='</ul>';
+    table+='</li>';
+
+    table+='<li><img src="rffeditor/imgEditor/configColumn.svg" height="40" title="Configuração de coluna">';
+    table+='<ul>';
+    table+='<li><button id="testeSel" onclick="insertTdAfter()"><img src="rffeditor/imgEditor/inserttableColumnAfter.svg" height="40" title="Inserir coluna depois"></button></li>';
+    table+='<li><button id="testeSel" onclick="insertTdBefore()"><img src="rffeditor/imgEditor/inserttableColumnBefore.svg" height="40" title="Inserir coluna antes"></button></li>';
+    table+='<li><button id="testeSel" onclick="delTd()"><img src="rffeditor/imgEditor/deleteTableColumn.svg" height="40" title="Apagar coluna"></button></li>';
+    table+='</ul>';
+    table+='</li>';
+
+    table+='<li><img src="rffeditor/imgEditor/configCell.svg" height="40" title="Configurar célula">';
+    table+='<ul>';
+    // table+='<li><button id="testeSel" onclick="rotateTdSel(\'sc\')"><img src="rffeditor/imgEditor/configCell-rotate-text.svg" height="40" title="Rotacionar o texto na célula"></button></li>';
+    // table+='<li><button id="testeSel" onclick="getWindowBckgroundColorTDsel()"><img src="rffeditor/imgEditor/configCell-background.svg" height="40" title="Mudar a cor da célula"></button></li>';
+    // table+='<li><button id="testeSel" onclick="openConfigBorderTdSel()"><img src="rffeditor/imgEditor/configCell-border.svg" height="40" title="Configurar borda da célula"></button></li>';
+    table+='<li><button id="testeSel" onclick="openConfigTdSel()"><img src="rffeditor/imgEditor/configCell-prop.svg" height="40" title="Configurar propriedade da célula"></button></li>';
+
+    table+='<li><button id="testeSel" onclick="insertCellRight()"><img src="rffeditor/imgEditor/configCell-insert-after.svg" height="40" title="Inserir célula depois"></button></li>';
+    table+='<li><button id="testeSel" onclick="insertCellLeft()"><img src="rffeditor/imgEditor/configCell-insert-before.svg" height="40" title="Inserir célula antes"></button></li>';
+    table+='<li><button id="testeSel" onclick="removeCell()"><img src="rffeditor/imgEditor/configCell-delete.svg" height="40" title="Apagar célula"></button></li>';
+    table+='</ul>';
+    table+='</li>';
+
+    table+='<li><img src="rffeditor/imgEditor/configTable.svg" height="40" title="Configurar tabela">';
+    table+='<ul>';
+    table+='<li><button id="testeSel" onclick="insertTdAfter()"><img src="rffeditor/imgEditor/inserttableColumnAfter.svg" height="40" title="Inserir coluna depois"></button></li>';
+    table+='<li><button id="testeSel" onclick="insertTdBefore()"><img src="rffeditor/imgEditor/inserttableColumnBefore.svg" height="40" title="Inserir coluna antes"></button></li>';
+    table+='<li><button id="testeSel" onclick="delTd()"><img src="rffeditor/imgEditor/deleteTableColumn.svg" height="40" title="Apagar coluna"></button></li>';
+    table+='</ul>';
+    table+='</li>';
+    table+='</ul>';
+    table+='</div>';
+    table += '<table cellspacing="0" class="tabela" id="tabelaInserida" onkeydown="keydownTable(event, this)" onkeyup="keyupTable(event, this)">';
     for(i=0; i<=numRow; i++){
         table+='<tr contenteditable="false" spellcheck="false">';
         // table+='<tr contenteditable="false" spellcheck="false">';
@@ -634,7 +778,8 @@ function insertTableNovo(numRow, numCol) {
         table+='</tr>';
     }
     table+='</table>';
-    document.execCommand('insertHTML', false, table);
+    divPai.innerHTML=table;
+    range.insertNode(divPai);
 }
 
 
@@ -645,8 +790,7 @@ function insertTableNovo(numRow, numCol) {
 ///////////////////////////////
 
 function insertTrAfter() {
-    var selecao = window.getSelection().getRangeAt(0).startContainer;
-    selecao = selecao.parentNode
+    var selecao = verifyGetTD();
     // console.log(selecao.nodeName+"------------")
     if(selecao.nodeName=='TD'){
         var tbody = selecao.parentNode.parentNode;
@@ -655,10 +799,23 @@ function insertTrAfter() {
         obj.setAttribute('contenteditable', 'false');
         obj.setAttribute('spellcheck', 'false');
         var tds = '';
+
+        let rowspan = selecao.getAttribute('rowspan');
+        console.log('Quantidade de linhas: '+rowspan)
+        let r = 0;
+        if(rowspan != null && rowspan!=0){
+            let j = parseInt(rowspan, 10)+1;
+            selecao.setAttribute('rowspan', j)
+            r=j-2;
+        }
+
         for(let i=0;i<tr.children.length;i++){
             if(i==0){
                 // tds+='<td style="'+styleFirstColumn+'" contenteditable="false" spellcheck="false" id="tableTdInicialSmall"></td>';
                 tds+='<td contenteditable="false" spellcheck="false" id="tableTdInicialSmall"></td>';
+            }else if(i<=r){
+                r=0;
+                continue;
             }else{
                 tds+='<td contenteditable="true" spellcheck="true" onclick="actionClickTd(this)">&nbsp;</td>';
             }
@@ -671,8 +828,7 @@ function insertTrAfter() {
 }
 
 function insertTrBefore() {
-    var selecao = window.getSelection().getRangeAt(0).startContainer;
-    selecao = selecao.parentNode
+    var selecao = verifyGetTD();
     // console.log(selecao.nodeName+"------------")
     if(selecao.nodeName=='TD'){
         var tbody = selecao.parentNode.parentNode;
@@ -681,6 +837,7 @@ function insertTrBefore() {
         obj.setAttribute('contenteditable', 'false');
         obj.setAttribute('spellcheck', 'false');
         var tds = '';
+
         for(let i=0;i<tr.children.length;i++){
             if(i==0){
                 // tds+='<td style="'+styleFirstColumn+'" contenteditable="false" spellcheck="false" id="tableTdInicialSmall"></td>';
@@ -704,8 +861,7 @@ function insertTrBefore() {
 ////////////////////////////////
 
 function insertTdBefore() {
-    var selecao = window.getSelection().getRangeAt(0).startContainer;
-    selecao = selecao.parentNode
+    var selecao = verifyGetTD();
     if(selecao.nodeName=='TD'){
         var tbody = selecao.parentNode.parentNode;
         let tr = selecao.parentNode;
@@ -744,8 +900,7 @@ function insertTdBefore() {
 }
 
 function insertTdAfter() {
-    var selecao = window.getSelection().getRangeAt(0).startContainer;
-    selecao = selecao.parentNode
+    var selecao = verifyGetTD();
     if(selecao.nodeName=='TD'){
         var tbody = selecao.parentNode.parentNode;
         let tr = selecao.parentNode;
@@ -784,7 +939,71 @@ function insertTdAfter() {
 }
 
 
+//////////////////////////////////////
+/******* Inserir célula ********/
+/////////////////////////////////////
 
+function insertCellLeft(){
+    let td = verifyGetTD();
+    if(td!=null){
+        let tr = td.parentNode;
+        let tdnew = document.createElement('td')
+        tdnew.setAttribute('contenteditable', 'true')
+        tdnew.setAttribute('spellcheck', 'true')
+        tdnew.setAttribute('onclick', 'actionClickTd(this)');
+        tdnew.innerHTML='&nbsp;'
+        tr.insertBefore(tdnew, tr.children[(getPositionTD(td)-1)]);
+    }
+}
+
+function insertCellRight(){
+    let td = verifyGetTD();
+    if(td!=null){
+        let tr = td.parentNode;
+        let tdnew = document.createElement('td')
+        tdnew.setAttribute('contenteditable', 'true')
+        tdnew.setAttribute('spellcheck', 'true')
+        tdnew.setAttribute('onclick', 'actionClickTd(this)');
+        tdnew.innerHTML='&nbsp;'
+        tr.insertBefore(tdnew, tr.children[getPositionTD(td)]);
+    }
+}
+
+function removeCell(){
+    let td = verifyGetTD();
+    if(td!=null){
+        let tr = td.parentNode;
+        let tbody = tr.parentNode;
+        let posTD = getPositionTD(td)-1;
+        let posTr = getPositionTr(tr);
+        console.log('Remove celular '+posTD)
+        if(posTr>0){
+            if(posTD>0 && tr.children.length>2){
+                tr.removeChild(td);
+            }else{
+                if(tr.children.length<=2){
+                    tbody.removeChild(tr);
+                }
+            }
+            console.log('Número de celulas na tr: '+tr.children.length)
+        }
+    }
+}
+
+
+
+function verifyGetTD(){
+    let td = window.getSelection().getRangeAt(0).startContainer;
+    for(let i=0; i<15; i++){
+        if(td.nodeName=='TD'){
+            return td;
+        }else if(td.nodeName=='DIV'){
+            return null;
+        }else{
+            td=td.parentNode;
+        }
+    }
+}
 
 
 //////////////////////////////////////
@@ -792,7 +1011,7 @@ function insertTdAfter() {
 /////////////////////////////////////
 
 function merge(tipo, type){
-    var selecao = window.getSelection().getRangeAt(0).startContainer;
+    var selecao = verifyGetTD();
     console.log(selecao.nodeName);
     // selecao = selecao.parentNode;
     if(selecao.nodeName=='TD'){
@@ -801,17 +1020,6 @@ function merge(tipo, type){
             mergeType(tipo, selecao)
         }else{
             unMergeType(tipo, selecao)
-        }
-    }else{
-        let td = selecao.parentNode;
-        console.log(td)
-        if(td.nodeName=='TD'){
-            console.log('entrou no segundo '+td.nodeName)
-            if(type=='add'){
-                mergeType(tipo, td)
-            }else{
-                unMergeType(tipo, td)
-            }
         }
     }
 }
@@ -923,6 +1131,9 @@ function unMergeType(tipo, td){
             let positTr = getPositionTr(tr);
             let positTd = getPositionTD(td)-1;
             let newTD = document.createElement('td');
+            newTD.setAttribute('contenteditable', 'true')
+            newTD.setAttribute('spellcheck', 'true')
+            newTD.setAttribute('onclick', 'actionClickTd(this)');
             newTD.innerHTML='&nbsp;'
             if(rowspan>2){
                 let newRowSpan = rowspan-1;
@@ -974,6 +1185,9 @@ function unMergeType(tipo, td){
             // tr.insertBefore(tdNew, tr.children[getPositionTD(td)]);
 
             let tdNew = document.createElement('td')
+            tdNew.setAttribute('contenteditable', 'true')
+            tdNew.setAttribute('spellcheck', 'true')
+            tdNew.setAttribute('onclick', 'actionClickTd(this)');
             tdNew.innerHTML = '&nbsp;'
             // let tdNew2 = document.createElement('td')
             let tr = td.parentNode;
@@ -998,6 +1212,20 @@ function unMergeType(tipo, td){
             }
         }
     }
+}
+
+
+function getNumMaxTDs(tbody){
+    //Pega a quantidade padrão de TDs nas TRs (o numero máximo de tds)
+    let numTdsPadrao = 0;
+    for(let j=0; j<tbody.children.length; j++){
+        console.log('Numero de tds: '+tbody.children[j].children.length)
+        if(tbody.children[j].children.length>numTdsPadrao){
+            numTdsPadrao = tbody.children[j].children.length;
+        }
+    }
+    console.log('QUantidade de TDs padrão: '+numTdsPadrao)
+    return numTdsPadrao;
 }
 
 
@@ -1047,8 +1275,7 @@ function getPositionTr(tr){
 
 
 function delTr() {
-    var selecao = window.getSelection().getRangeAt(0).startContainer;
-    selecao = selecao.parentNode
+    var selecao = verifyGetTD();
     // console.log(selecao.nodeName+"------------")
     if(selecao.nodeName=='TD'){
         var tbody = selecao.parentNode.parentNode;
@@ -1058,8 +1285,7 @@ function delTr() {
 }
 
 function delTd() {
-    var selecao = window.getSelection().getRangeAt(0).startContainer;
-    selecao = selecao.parentNode
+    var selecao = verifyGetTD();
     if(selecao.nodeName=='TD'){
         var tbody = selecao.parentNode.parentNode;
         let tr = selecao.parentNode;
@@ -1093,18 +1319,47 @@ function delTd() {
 var tdSel = [];
 var ctrlActive = false;
 
+// function actionClickTd(elem){
+//     // console.log("ctrlActive = "+ctrlActive)
+//     // console.log(tdSel)
+//     if(ctrlActive==true){
+//         tdSel.push(elem)
+//         console.log('célula selecionada: '+elem.cellIndex)
+//         elem.classList.add('selectedCel')
+//         // console.log(elem)
+//     }else{
+//         removeSelectedCel();
+//     }
+// }
+
+
 function actionClickTd(elem){
     // console.log("ctrlActive = "+ctrlActive)
     // console.log(tdSel)
     if(ctrlActive==true){
-        tdSel.push(elem)
-        console.log('célula selecionada: '+elem.cellIndex)
-        elem.classList.add('selectedCel')
+        let igual = false;
+        let posi = 0;
+        for(let i=0; i<tdSel.length; i++){
+            if(tdSel[i]==elem){
+                igual=true;
+                posi = tdSel.indexOf(elem);
+            }
+            console.log(tdSel[i])
+        }
+        if(igual==true){
+            tdSel.splice(posi, 1);
+            elem.classList.remove('selectedCel');
+        }else{
+            tdSel.push(elem)
+            console.log('célula selecionada: '+elem.cellIndex);
+            elem.classList.add('selectedCel');
+        }
         // console.log(elem)
     }else{
         removeSelectedCel();
     }
 }
+
 function keydownTable(event, elem){
     if(event.keyCode==17){
         console.log(event.keyCode)
@@ -1133,6 +1388,68 @@ function removeSelectedCel(){
     tdSel=[];
 }
 
+
+
+
+
+function selectElementMoveMouse(elem){
+    // console.log("ctrlActive = "+ctrlActive)
+    // console.log(tdSel)
+    if(ctrlActive==true){
+        let igual = false;
+        let posi = 0;
+        for(let i=0; i<tdSel.length; i++){
+            if(tdSel[i]==elem){
+                igual=true;
+                posi = tdSel.indexOf(elem);
+            }
+            // console.log(tdSel[i])
+        }
+        if(igual==true){
+            // tdSel.splice(posi, 1);
+            // elem.classList.remove('selectedCel');
+        }else{
+            tdSel.push(elem)
+            console.log('célula selecionada: '+elem.cellIndex);
+            elem.classList.add('selectedCel');
+        }
+        // console.log(elem)
+    }else{
+        removeSelectedCel();
+    }
+}
+
+function verifyElementFocus(){
+    let elem = verifyGetTD();
+    if(elem!=null){
+        let tr = elem.parentNode;
+        let tbody = tr.parentNode;
+        //É uma tabela
+        let listenerMov = function(event){
+            // console.log(event.toElement)
+            // ctrlActive=true;
+            selectElementMoveMouse(event.toElement)
+        }
+        tbody.addEventListener('mousedown', function(event){
+            console.log(tags)
+            tbody.addEventListener('mousemove', listenerMov, false);
+        })
+        tbody.addEventListener('mouseup', function(){
+            // ctrlActive=false;
+            tbody.removeEventListener('mousemove', listenerMov, false)
+        })
+    }else{
+        //Não é uma tabela
+    }
+}
+
+
+
+///////////////////////////////////////////////////////////////
+/**************** Configurações de célula ********************/
+///////////////////////////////////////////////////////////////
+
+
 function getWindowBckgroundColorTDsel(){
     window.open("rffeditor/windowColorBackGroundTD.php", 'janela', 'height=350, width=500, top=50, left=100, scrollbar=no, fullscreen=no');
 }
@@ -1144,13 +1461,24 @@ function backGroundColorTdSel(cor){
             if(cor=='limpar'){
                 tdSel[i].style.backgroundColor=null;
             }else{
-                tdSel[i].style.backgroundColor='#'+cor;
+                // tdSel[i].style.backgroundColor='#'+cor;
+                tdSel[i].style.backgroundColor=cor;
             }
         }
     }
 }
 
-function borderTdSel(config){
+function openConfigTdSel(){
+    if(tdSel.length>0){
+        let style = tdSel[0].getAttribute('style');
+        localStorage.setItem('style', style);
+        window.open('rffeditor/windowConfigBorderCell.php', 'janela', 'height=350, width=500, top=50, left=100, scrollbar=no, fullscreen=no');
+    }else{
+        alert('Nenhuma célula selecionada! Para selecionar uma célula, segure a tecla CTRL e clique em cima da célula, com isso aparecerá uma cor de seleção nela!')
+    }
+}
+
+function configBorderTdSel(config){
     if(tdSel.length>0){
         for(let i=0; i<tdSel.length; i++){
             console.log(config)
@@ -1164,11 +1492,24 @@ function borderTdSel(config){
     }
 }
 
+function configPaddingTdSel(config){
+    if(tdSel.length>0){
+        for(let i=0; i<tdSel.length; i++){
+            if(config=='limpar'){
+                tdSel[i].style.padding = null;
+            }else{
+                tdSel[i].style.padding = config+'px';
+            }
+        }
+    }
+}
+
 function rotateTdSel(config){
     if(tdSel.length>0){
         for(let i=0; i<tdSel.length; i++){
             console.log(tdSel[i].children[0])
             if(config=='limpar'){
+                tdSel[i].style.writingMode=null;
                 tdSel[i].style.textOrientation=null;
             }else{
                 tdSel[i].style.writingMode='vertical-rl';
@@ -1214,63 +1555,92 @@ function openWindowInsertVideo(){
 // }
 
 function insertVideo(codVideo, si, width, height) {
-    selection = window.getSelection().toString();
-    //var table = '<iframe width="560" height="315" src="https://www.youtube.com/embed/dtLXZEuZbeQ?si=HdSO5bFrWUow5eNl" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>';
-    // var video = '<iframe width="'+width+'" height="'+height+'" src="https://www.youtube.com/embed/'+codVideo+'?si='+si+'" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>';
-    var video = '<div class="item" id="item" dragstart="dragStart(event)" drag="drag(event)" dragend="dragend(event)" draggable="true" droppable="false" ondragover="allowDrop2(event)" contenteditable="false" style="width:'+width+'; height:'+height+';">'
+    let range = window.getSelection().getRangeAt(0);
+    let divPai = document.createElement('div');
+    divPai.setAttribute('class', 'item');
+    divPai.setAttribute('id', 'item');
+    divPai.setAttribute('dragstart', 'dragStart(event)');
+    divPai.setAttribute('drag', 'drag(event)');
+    divPai.setAttribute('dragend', 'dragend(event)');
+    divPai.setAttribute('draggable', 'true');
+    divPai.setAttribute('droppable', 'false');
+    divPai.setAttribute('ondragover', 'allowDrop2(event)');
+    divPai.setAttribute('contenteditable', 'false');
+    divPai.setAttribute('style', 'width:'+width+'; height:'+height+';');
+    var video = ''
     video += '<div id="tools" draggable="false" droppable="false">'
-    video += '<button onclick="editVideo(this, event)" draggable="false" droppable="false">Editar</button>'
-    // video += '<div id="arrastar" draggable="true" droppable="false" ondragover="allowDrop(event)" contenteditable="false"></div>'
-    // video += '<div id="arrastar" dragstart="dragStart(event)" drag="drag(event)" dragend="dragend(event)" draggable="true" droppable="false" contenteditable="false"></div>'
+    video += '<button onclick="editVideo(this, event, \'img\')" draggable="false" droppable="false">Editar</button>'
     video += '<button onclick="fecharJanVid(this)" draggable="false" droppable="false">X</button>'
     video += '</div>'
     video += '<iframe width="92%" height="92%" src="https://www.youtube.com/embed/'+codVideo+'?si='+si+'" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>';
-    video += '</div>'
-    //var video = window.prompt("Insira no campo abaixo o iframe de incorporação do vídeo do youtube", "");
-    document.execCommand('insertHTML', false, video);
+    
+    divPai.innerHTML = video;
+    range.insertNode(divPai)
 }
 
-function insertImg2() {
-    selection = window.getSelection().toString();
-    wrappedselection = '<span class="accent" style="somestyle">' + selection + '</span>';
-    var img = document.createElement('img');
-    img.src = "imgsGerais/projeto-codigo-01-08-2022.png";
 
-    // Defina o atributo contenteditable da imagem como false para que o usuário não possa editar o texto dentro dela.
-    img.contentEditable = false;
 
-    // Defina alguns estilos CSS para tornar a imagem redimensionável.
-    img.style.width = "200px"; // Largura inicial da imagem
-    img.style.height = "auto"; // Altura automática para manter a proporção
 
-    // Adicione a imagem ao documento.
-    document.execCommand('insertHTML', false, img.outerHTML);
-    img.addEventListener('click', function () {
-        img.style.width = (img.offsetWidth + 10) + 'px'; // Aumentar a largura em 10 pixels quando a imagem for clicada
-    });
-}
-function addHs(){
-    document.getElementById('formatH').addEventListener('change', function() {
-        var selectedOption = this.children[this.selectedIndex];
-        // console.log(selectedOption)
-    /* var value = this.value;
-        var param = selectedOption.getAttribute("data-param");
-
-        document.getElementById('value').textContent = 'value = ' + value;
-        document.getElementById('param').textContent = 'data-param = ' + param;*/
-    });
-}
-
+// function insertEmotions(img){
+//     if(img != null){
+//         var url = img.getAttribute("src");
+//         var width = 50;
+//         var height = 'auto';
+//         document.getElementById("porcento").innerHTML = '<img src="'+url+'" id="previewImage" width="'+width+'" height="'+height+'">';
+//         insertImg();
+//     }else{
+//         console.log("selecione uma imagem e Clique no botão Carregar e visualizar antes de inserir")
+//     }
+// }
 
 
 function insertEmotions(img){
     if(img != null){
+        let range = window.getSelection().getRangeAt(0);
         var url = img.getAttribute("src");
-        var width = 50;
-        var height = 'auto';
-        document.getElementById("porcento").innerHTML = '<img src="'+url+'" id="previewImage" width="'+width+'" height="'+height+'">';
-        insertImg();
+        var width = 'auto';
+        var height = '50';
+        let image = document.createElement('img');
+        image.setAttribute('src', url);
+        image.setAttribute('width', width);
+        image.setAttribute('height', height);
+        image.setAttribute('src', url);
+        image.setAttribute('onclick', 'openWindowEditImage(this)');
+        image.setAttribute('style', 'margin-bottom: -5px;');
+        range.insertNode(image);
     }else{
         console.log("selecione uma imagem e Clique no botão Carregar e visualizar antes de inserir")
     }
 }
+
+
+
+
+
+function verifyGetNode(node){
+    // if(node=='DIV'){
+    //     return null
+    // }
+    let td = window.getSelection().getRangeAt(0).startContainer;
+    for(let i=0; i<15; i++){
+        if(td.nodeName==node){
+            return td;
+        }else if(td.nodeName=='DIV' && td.getAttribute('id')=='texto'){
+            return null;
+        }else{
+            td=td.parentNode;
+        }
+    }
+}
+
+
+function hexToRgb(hex) {
+    var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+    return result ? {
+      r: parseInt(result[1], 16),
+      g: parseInt(result[2], 16),
+      b: parseInt(result[3], 16)
+    } : null;
+  }
+  
+//   alert(hexToRgb("#c2cc9e").r+' - '+hexToRgb("#c2cc9e").g+' - '+hexToRgb("#c2cc9e").b); // "51";

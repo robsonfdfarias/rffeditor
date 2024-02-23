@@ -88,23 +88,35 @@ console.log(i)
 
 
 function insertImg() {
+  let range = window.getSelection().getRangeAt(0);
   var img = document.getElementById("previewImage");
   srcImg = img.getAttribute("src");
   width = img.getAttribute("width");
   height = img.getAttribute("height");
   selection = window.getSelection().toString();
-  var media = '<div class="item" id="item" dragstart="dragStart(event)" drag="drag(event)" dragend="dragend(event)" draggable="true" droppable="false" ondragover="allowDrop2(event)" contenteditable="false" style="width:'+width+'; height:'+height+';">'
-  media += '<div id="tools" draggable="false" droppable="false">'
-  media += '<button onclick="editVideo(this, event)" draggable="false" droppable="false">Editar</button>'
+  let divPai = document.createElement('div');
+  divPai.setAttribute('class', 'item');
+  divPai.setAttribute('id', 'item');
+  divPai.setAttribute('dragstart', 'dragStart(event)');
+  divPai.setAttribute('drag', 'drag(event)');
+  divPai.setAttribute('dragend', 'dragend(event)');
+  divPai.setAttribute('draggable', 'true');
+  divPai.setAttribute('droppable', 'false');
+  divPai.setAttribute('ondragover', 'allowDrop2(event)');
+  divPai.setAttribute('contenteditable', 'false');
+  divPai.setAttribute('style', 'width:'+width+'px; height:'+height+'px;');
+  var media = '<div id="tools" draggable="false" droppable="false">'
+  media += '<button onclick="editVideo(this, event, \'img\')" draggable="false" droppable="false">Editar</button>'
     // media += '<div id="arrastar" dragstart="dragStart(event)" drag="drag(event)" dragend="dragend(event)" draggable="true" droppable="false" contenteditable="false"></div>'
     media += '<button onclick="fecharJanVid(this)" draggable="false" droppable="false">X</button>'
     media += '</div>'
-    // media += '<img src="'+srcImg+'" width="'+width+'" height="'+height+'" onclick="openWindowEditImage(this)" class="imagem">';
-    media += '<img src="'+srcImg+'" width="98%" height="98%" onclick="openWindowEditImage(this)" class="imagem">';
-    media += '</div>'
-  // var imagem = '<img src="'+srcImg+'" width="'+width+'" height="'+height+'" onclick="openWindowEditImage(this)" class="imagem">';
-  document.execCommand('insertHTML', false, media);
+    // media += '<img src="'+srcImg+'" width="98%" height="98%" onclick="openWindowEditImage(this)" class="imagem">';
+    media += '<img src="'+srcImg+'" width="98%" height="98%" class="imagem">';
+  divPai.innerHTML = media;
+  range.insertNode(divPai);
 }
+
+
 /*
 window.addEventListener("click", function(){
   setTimeout(function () {
@@ -214,7 +226,8 @@ function setCursor(node, cursorElement) {
 editor = document.querySelector("#texto");
 
 function funcBtImg(){
-  var imG = document.getElementsByClassName("imagem");
+  // var imG = document.getElementsByClassName("imagem");
+  var imG = document.getElementsByTagName('img');
   for(i=0;i<imG.length;i++){
       imG[i].setAttribute("onclick", "openWindowEditImage(this)")
   }
