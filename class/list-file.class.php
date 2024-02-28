@@ -25,6 +25,7 @@ class ListFile {
         for($i=0; $i<count($pastas); $i++){
             $d = dir($pastas[$i]);
             $nomePasta = str_replace("../icones/", "", $pastas[$i]);
+            $nomePasta = str_replace("rffeditor/icones/", "", $pastas[$i]);
             echo '<div style="width:100%;"><h1>'.$nomePasta.'</h1>'.$this->creditos($nomePasta).'</div>';
             while($arq=$d->read()){
                 //echo $arq."<br>";

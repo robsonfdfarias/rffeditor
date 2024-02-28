@@ -291,7 +291,7 @@
 
 
     #editVideo {
-        width: 200px;
+        min-width: 200px;
         position: fixed;
         top: 100px;
         left: 0px;
@@ -384,6 +384,106 @@
             width:40px;
         }
     }
+
+
+
+
+
+    .payment-methods {
+        list-style: none;
+        margin: 10px 0;
+        padding: 0;
+        padding-bottom: 30px;
+    }
+
+    .payment-methods:after {
+        content: "";
+        clear: both;
+    }
+
+    .payment-method {
+        border: 1px solid #ccc;
+        box-sizing: border-box;
+        float: left;
+        height: 50px;
+        position: relative;
+        width: 50px;
+    }
+
+    .payment-method label {
+        background: #fff no-repeat center center;
+        bottom: 1px;
+        cursor: pointer;
+        display: block;
+        font-size: 0;
+        left: 1px;
+        position: absolute;
+        right: 1px;
+        text-indent: 100%;
+        top: 1px;
+        white-space: nowrap;
+    }
+
+    .payment-method + .payment-method {
+        margin-left: 8px;
+        display: inline-flex;
+    }
+
+    .breakTextLeft label {
+        color: #000;
+        /* background-image: url(https://dl.dropbox.com/s/yvzrr9o54s2llkr/uol.png); */
+        background-image: url(rffeditor/imgEditor/alignMedia-breakText-left.svg);
+    }
+
+    .breakTextCenter label {
+        color: #000;
+        /* background-image: url(https://dl.dropbox.com/s/yvzrr9o54s2llkr/uol.png); */
+        background-image: url(rffeditor/imgEditor/alignMedia-breakText-center.svg);
+    }
+
+    .breakTextRight label {
+        color: #000;
+        /* background-image: url(https://dl.dropbox.com/s/yvzrr9o54s2llkr/uol.png); */
+        background-image: url(rffeditor/imgEditor/alignMedia-breakText-right.svg);
+    }
+
+    .esquerda label {
+        /* background-image: url(https://dl.dropbox.com/s/i4z39zy2mtb7xq1/paypal.png); */
+        background-image: url(rffeditor/imgEditor/alignMedia-float-left.svg);
+    }
+
+    .direita label {
+        /* background-image: url(https://dl.dropbox.com/s/myj41602bom0g8p/bankslip.png); */
+        background-image: url(rffeditor/imgEditor/alignMedia-float-right.svg);
+    }
+
+    .payment-methods input:focus + label {
+        outline: 2px dotted #21b4d0;
+    }
+
+    .payment-methods input:checked + label {
+        outline: 4px solid #21b4d0;
+    }
+
+    .payment-methods input:checked + label:after {
+        background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB3aWR0aD0iMjBweCIgaGVpZ2h0PSIyMHB4IiB2aWV3Qm94PSIwIDAgMjAgMjAiIHZlcnNpb249IjEuMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayI+CiAgICA8dGl0bGU+Y2hlY2tlZDwvdGl0bGU+CiAgICA8ZyBpZD0iUGFnZS0xIiBzdHJva2U9Im5vbmUiIHN0cm9rZS13aWR0aD0iMSIgZmlsbD0ibm9uZSIgZmlsbC1ydWxlPSJldmVub2RkIj4KICAgICAgICA8ZyBpZD0iY2hlY2tlZCIgZmlsbC1ydWxlPSJub256ZXJvIj4KICAgICAgICAgICAgPHBhdGggZD0iTTEwLjAwNDkyODUsMjAgQzE1LjQ5NTMxNzksMjAgMjAsMTUuNDkzMDk2NiAyMCwxMCBDMjAsNC40OTcwNDE0MiAxNS40OTUzMTc5LDAgOS45OTUwNzE0NiwwIEM0LjUwNDY4MjExLDAgMCw0LjQ5NzA0MTQyIDAsMTAgQzAsMTUuNDkzMDk2NiA0LjUwNDY4MjExLDIwIDEwLjAwNDkyODUsMjAgWiIgZmlsbD0iIzIxQjREMCI+PC9wYXRoPgogICAgICAgICAgICA8cGF0aCBkPSJNOS4wNDQ0MDE1NCwxNiBDOC41OTA3MzM1OSwxNiA4LjIzMzU5MDczLDE1Ljc3NDM1OSA3Ljk1MzY2Nzk1LDE1LjQyNTY0MSBMNS4zMzc4Mzc4NCwxMi4xNjQxMDI2IEM1LjA5NjUyNTEsMTEuODc2OTIzMSA1LDExLjYxMDI1NjQgNSwxMS4yOTIzMDc3IEM1LDEwLjYyNTY0MSA1LjUzMDg4ODAzLDEwLjA5MjMwNzcgNi4xNDg2NDg2NSwxMC4wOTIzMDc3IEM2LjUwNTc5MTUxLDEwLjA5MjMwNzcgNi43ODU3MTQyOSwxMC4yNTY0MTAzIDcuMDM2Njc5NTQsMTAuNTUzODQ2MiBMOS4wMjUwOTY1MywxMy4wNTY0MTAzIEwxMi44MTg1MzI4LDYuNjg3MTc5NDkgQzEzLjA5ODQ1NTYsNi4yMzU4OTc0NCAxMy40MTY5ODg0LDYgMTMuODMyMDQ2Myw2IEMxNC40NDAxNTQ0LDYgMTUsNi40ODIwNTEyOCAxNSw3LjE0ODcxNzk1IEMxNSw3LjQwNTEyODIxIDE0LjkwMzQ3NDksNy42OTIzMDc2OSAxNC43MzkzODIyLDcuOTU4OTc0MzYgTDEwLjEyNTQ4MjYsMTUuMzY0MTAyNiBDOS44NjQ4NjQ4NiwxNS43NTM4NDYyIDkuNDY5MTExOTcsMTYgOS4wNDQ0MDE1NCwxNiBaIiBpZD0iUGF0aCIgZmlsbD0iI0ZGRkZGRiI+PC9wYXRoPgogICAgICAgIDwvZz4KICAgIDwvZz4KPC9zdmc+);
+        bottom: -10px;
+        content: "";
+        display: inline-block;
+        height: 20px;
+        position: absolute;
+        right: -10px;
+        width: 20px;
+    }
+
+    @-moz-document url-prefix() {
+        .payment-methods input:checked + label:after {
+            bottom: 0;
+            right: 0;
+            background-color: #21b4d0;
+        }
+    }
+
     
 </style>
 <script language="JavaScript">
@@ -396,8 +496,35 @@
     
 
 <div id="editVideo">
-    <input type="number" name="larg" id="larg">
-    <input type="number" name="alt" id="alt">
+    <input type="number" name="larg" id="larg"><br>
+    <input type="number" name="alt" id="alt"><br>
+    <button onclick="getSetCaption()">Adicionar Caption</button>
+    <ul class="payment-methods">
+        <li class="payment-method esquerda">
+            <input name="payment_methods" type="radio" id="esquerda">
+            <label for="esquerda">esquerda</label>
+        </li>
+
+        <li class="payment-method direita">
+            <input name="payment_methods" type="radio" id="direita">
+            <label for="direita">direita</label>
+        </li>
+
+        <li class="payment-method breakTextLeft">
+            <input name="payment_methods" type="radio" id="breakTextLeft">
+            <label for="breakTextLeft">solto</label>
+        </li>
+
+        <li class="payment-method breakTextCenter">
+            <input name="payment_methods" type="radio" id="breakTextCenter">
+            <label for="breakTextCenter">breakTextCenter</label>
+        </li>
+
+        <li class="payment-method breakTextRight">
+            <input name="payment_methods" type="radio" id="breakTextRight">
+            <label for="breakTextRight">breakTextRight</label>
+        </li>
+    </ul><br>
     <span id="tipoObj" style="display:none;"></span>
     <button onclick="salveUpdateIframe()">alterar</button>
     <button onclick="cancelEditMedia()">Cancelar</button>
@@ -467,7 +594,7 @@
     <button id="testeSel" onclick="insertCellRight()">insertCellRight</button>
     <button id="testeSel" onclick="removeCell()">removeCell</button> -->
     <!-- <button id="testeSel" onclick="getTags()">getTags</button> -->
-    <!-- <button id="testeSel" onclick="console.log(verifyGetNode('DIV'))">Pegar div</button> -->
+    <!-- <button id="testeSel" onclick="configBackgroundTable()">Pegar table</button> -->
 
     <select name="typefontface" id="typefontface">
         <option value="padrao" name="padrao" id="padrao"  disabled selected>Font</option>
@@ -665,6 +792,45 @@
             alt=alt+'px'
         }
         nodePai.setAttribute('style', 'width: '+larg+'; height: '+alt+';');
+        let esquerda = document.getElementById('esquerda');
+        let breakTextLeft = document.getElementById('breakTextLeft');
+        let breakTextRight = document.getElementById('breakTextRight');
+        let breakTextCenter = document.getElementById('breakTextCenter');
+        let direita = document.getElementById('direita');
+        let direcao = null;
+        let margin = null;
+        let order = null;
+        if(esquerda.checked){
+            direcao='left';
+            // nodePai.style.marginRight='20px';
+            margin='0 20px 0 0';
+            order='none';
+        }else if(direita.checked){
+            direcao='right';
+            // nodePai.style.marginLeft='20px';
+            margin='0 0 0 20px';
+            order='none';
+        }else if(breakTextLeft.checked){
+            direcao='none';
+            // nodePai.style.margin='0';
+            margin='0';
+            order='none';
+        }else if(breakTextCenter.checked){
+            direcao='none';
+            // nodePai.style.margin='auto';
+            margin='auto';
+            order='none';
+        }else if(breakTextRight.checked){
+            direcao='none';
+            // nodePai.style.margin='0';
+            margin='0 0 0 auto';
+            order=1;
+        }
+        nodePai.style.margin=margin;
+        nodePai.style.order=order;
+        nodePai.style.width=larg;
+        nodePai.style.height=alt;
+        nodePai.style.float=direcao;
         document.getElementById('editVideo').setAttribute('style', 'display:none;')
         cancelEditMedia()
     }

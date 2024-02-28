@@ -751,6 +751,7 @@ function insertTableNovo(numRow, numCol) {
     table+='</ul>';
     table+='</li>';
     table+='</ul>';
+    table+='<button onclick="fecharJanTab(this)" draggable="false" droppable="false">X</button>';
     table+='</div>';
     table += '<table cellspacing="0" class="tabela" id="tabelaInserida" onkeydown="keydownTable(event, this)" onkeyup="keyupTable(event, this)">';
     for(i=0; i<=numRow; i++){
@@ -1520,6 +1521,37 @@ function rotateTdSel(config){
     }
 }
 
+function configBorderTable(border){
+    let table = verifyGetNode('TABLE');
+    if(table!=null){
+        if(border=='limpar'){
+            table.style.border=null;
+        }else{
+            border='2px solid red';
+            table.style.border=border;
+        }
+    }
+}
+
+function configBackgroundTable(obj){
+    let table = verifyGetNode('TABLE');
+    if(table!=null){
+        if(obj=='limpar'){
+            table.setAttribute('background', null);
+        }else{
+            obj='../imagens/2023/11/28/2023-11-28_09-06-07_310471.svg.svg';
+            // table.style.backgroundImage = "url('"+obj+"')";
+            // table.style.background = "no-repeat left url('"+obj+"')";
+            // table.style.background = "url('"+obj+"') left/contain no-repeat";
+            // table.style.background = "url("+obj+") left top/contain no-repeat padding-box";
+            // let bk = table.style.background;
+            // table.style.background=bk.replace('(\"', '(')
+            table.style.backgroundImage = 'url('+obj+')';
+            // table.setAttribute('background', obj);
+        }
+    }
+}
+
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /*************************************************** Cria e edita tabela FIM ***************************************************/
@@ -1572,8 +1604,9 @@ function insertVideo(codVideo, si, width, height) {
     video += '<button onclick="editVideo(this, event, \'img\')" draggable="false" droppable="false">Editar</button>'
     video += '<button onclick="fecharJanVid(this)" draggable="false" droppable="false">X</button>'
     video += '</div>'
-    video += '<iframe width="92%" height="92%" src="https://www.youtube.com/embed/'+codVideo+'?si='+si+'" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>';
-    
+    video += '<div id="mediaAndCaption">'
+    video += '<iframe width="100%" height="90%" src="https://www.youtube.com/embed/'+codVideo+'?si='+si+'" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>';
+    video += '</div>'
     divPai.innerHTML = video;
     range.insertNode(divPai)
 }
@@ -1621,14 +1654,14 @@ function verifyGetNode(node){
     // if(node=='DIV'){
     //     return null
     // }
-    let td = window.getSelection().getRangeAt(0).startContainer;
+    let elem = window.getSelection().getRangeAt(0).startContainer;
     for(let i=0; i<15; i++){
-        if(td.nodeName==node){
-            return td;
-        }else if(td.nodeName=='DIV' && td.getAttribute('id')=='texto'){
+        if(elem.nodeName==node){
+            return elem;
+        }else if(elem.nodeName=='DIV' && elem.getAttribute('id')=='texto'){
             return null;
         }else{
-            td=td.parentNode;
+            elem=elem.parentNode;
         }
     }
 }
@@ -1644,3 +1677,82 @@ function hexToRgb(hex) {
   }
   
 //   alert(hexToRgb("#c2cc9e").r+' - '+hexToRgb("#c2cc9e").g+' - '+hexToRgb("#c2cc9e").b); // "51";
+
+
+
+
+
+
+
+
+function fecharJanVid(elem){
+    let tool = elem.parentNode;
+    let jan = tool.parentNode;
+    let geral = jan.parentNode;
+    geral.removeChild(jan)
+    document.getElementById('editVideo').setAttribute('style', 'display:none;')
+}
+
+
+
+
+
+
+function fecharJanTab(elem){
+    let tool = elem.parentNode;
+    let jan = tool.parentNode;
+    let geral = jan.parentNode;
+    geral.removeChild(jan)
+    document.getElementById('editVideo').setAttribute('style', 'display:none;')
+}
+
+
+
+
+function getSetCaption(){
+    console.log(nodePai.children.length)
+    console.log(parseInt(nodePai.style.height)+' de altura')
+    let dvMedia = nodePai.children[1];
+    if(dvMedia.children.length>1){
+        let caption = dvMedia.children[1];
+        console.log(caption);
+        dvMedia.removeChild(caption);
+    }else{
+        let altura = parseInt(nodePai.style.height);
+        let dvCaption = document.createElement('div');
+        dvCaption.setAttribute('id', 'captionMedia');
+        dvCaption.setAttribute('contenteditable', 'true');
+        dvCaption.setAttribute('spellcheck', 'true');
+        dvCaption.setAttribute('autocomplete', 'true');
+        dvCaption.setAttribute('draggable', 'false');
+        dvCaption.setAttribute('droppable', 'false');
+        // dvCaption.setAttribute('onclick', 'checkContentCaption(this)');
+        dvCaption.classList.add('captionText');
+        dvCaption.style.padding = '3px 10px';
+        dvCaption.style.backgroundColor = '#f7f7f7';
+        dvCaption.style.color = '#333';
+        dvCaption.style.fontStyle = 'italic';
+        dvCaption.style.fontSize = '.75em';
+        // dvCaption.style.fontWeight = 'bold';
+        // dvCaption.style.position = 'absolute';
+        // dvCaption.style.top = altura+'px';
+        // dvCaption.style.left = '0px';
+        dvCaption.style.minHeight = '20px';
+        dvCaption.style.width = '100%-20px';
+        dvCaption.setAttribute('onkeyup', 'checkContentCaption(this)');
+        dvMedia.insertBefore(dvCaption, dvMedia.children[1]);
+    }
+}
+
+function checkContentCaption(elem){
+    let t = false;
+    if(elem.innerHTML!=''){
+        if(t==false){
+            elem.classList.remove('captionText');
+            t=true;
+        }
+    }else{
+        elem.classList.add('captionText');
+        t=false;
+    }
+}

@@ -145,12 +145,3 @@ function allowDrop2(ev){
                             ev.preventDefault();
     }
 }
-
-
-function fecharJanVid(elem){
-    let tool = elem.parentNode;
-    let jan = tool.parentNode;
-    let geral = jan.parentNode;
-    geral.removeChild(jan)
-    document.getElementById('editVideo').setAttribute('style', 'display:none;')
-}

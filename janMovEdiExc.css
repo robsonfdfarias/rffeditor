@@ -29,7 +29,7 @@
     /* background-position: 120% top; */
     background-position: calc(100%+45px) top;
     resize: both;
-    overflow: auto;
+    overflow: visible;
     box-sizing: border-box;
     scrollbar-width: none;
 }
@@ -46,6 +46,8 @@
     background-position: right top;
     cursor:move;
     scrollbar-width: thin;
+    /* overflow: auto; */
+    overflow:auto;
 }
 
 .item::-webkit-scrollbar-thumb {
@@ -70,6 +72,12 @@
     height: 50px; 
     background-color:#029669;
 }
+
+.captionText::before{
+    content: 'Clique aqui para digitar seu texto';
+}
+
+
 
 /******************************** FIM da configuração da janela de vídeo ***************************************/
 
@@ -189,7 +197,7 @@
 
 .tabelaObj:hover .configTable{
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
 }
 
 #testeSel{
