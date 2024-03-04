@@ -146,6 +146,7 @@ Distância do texto para a borda: <span id="valorPadding"></span> <br>
         top.opener.configPaddingTdSel(paddingBorder);
         top.opener.backGroundColorTdSel(colorbackg);
         top.opener.rotateTdSel(textDirection);
+            localStorage.setItem('style', null);
         window.close();
     }
     function removeConfig(){
@@ -155,6 +156,7 @@ Distância do texto para a borda: <span id="valorPadding"></span> <br>
         top.opener.configPaddingTdSel(hex);
         top.opener.backGroundColorTdSel(hex);
         top.opener.rotateTdSel(hex);
+            localStorage.setItem('style', null);
         window.close();
     }
 </script>

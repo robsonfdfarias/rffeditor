@@ -75,6 +75,8 @@
     border:0px solid #000;
     padding: 15px;
     border-radius: 10px;
+    scrollbar-width:thin;
+    scroll-behavior: smooth;
     scrollbar-color: rgba(194,204,158,0.5) rgba(12,88,44,0.2);
     transition: all ease-in-out 0.5s;
 }
@@ -768,13 +770,22 @@ rffEfeitoBGText {
 
 #captionMedia{
     cursor: default;
-    z-index: 10005;
+    z-index: 1001;
     border-radius: 0 0 10px 10px;
     border: 1px solid #cdcdcd;
     word-wrap: break-word;
     -ms-word-wrap: break-word;
     word-break: break-all;
     -ms-word-break: break-all;
+    padding: 8px 10px;
+    background-color: #f7f7f7;
+    color: #333;
+    font-style: italic;
+    font-size: .75em;
+    /* font-weight: bold; */
+    position: absolute;
+    /* min-width: 100% - 20px; */
+    width: -webkit-fill-available;
 }
 
 
@@ -792,8 +803,6 @@ rffEfeitoBGText {
     -ms-word-wrap: break-word;
     word-break: break-all;
     -ms-word-break: break-all;
-    scrollbar-width:thin;
-    scroll-behavior: smooth;
     hyphenate-limit-chars: 8 4 4;
     -webkit-hyphens: manual;
     -ms-hyphens: manual;

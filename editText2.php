@@ -288,25 +288,6 @@
         border-radius: 4px;
         font-size: 20px;
     }
-
-
-    #editVideo {
-        min-width: 200px;
-        position: fixed;
-        top: 100px;
-        left: 0px;
-        margin: auto;
-        background-color: white;
-        padding: 20px;
-        /* height: 70%; */
-        /* overflow-y: auto; */
-        display: none;
-        flex-direction: column;
-        border: 1px solid #dfdfdf;
-        box-shadow: 2px 2px 2px rgba(0,0,0,0.2);
-        border-radius: 8px;
-        z-index: 10001;
-    }
     
 
     #emotions {
@@ -484,10 +465,62 @@
         }
     }
 
+
+
+    
+
+
+    #editVideo {
+        min-width: 200px;
+        max-width: 400px;
+        position: fixed;
+        /* position: sticky; */
+        /* position: absolute; */
+        top: 100px;
+        left: 0px;
+        margin: auto;
+        background-color: white;
+        padding: 20px;
+        /* height: 70%; */
+        /* overflow-y: auto; */
+        display: none;
+        flex-direction: column;
+        border: 1px solid #dfdfdf;
+        box-shadow: 2px 2px 2px rgba(0,0,0,0.2);
+        border-radius: 8px;
+        z-index: 10001;
+        padding-top: 50px;
+        background-image: url('rffeditor/imgEditor/arrastar.png');
+        background-size: 100% 8%;
+        background-repeat: repeat-x;
+    }
+
+    #editVideo input[type="number"]{
+        width: calc(100% - 20px) !important;
+        /* margin-bottom: 10px; */
+    }
+    #editVideo #addCaption{
+        /* margin-top: 10px; */
+    }
+
+    #editVideo table tr td{
+        justify-content: center;
+        padding-bottom: 10px;
+    }
+
+
+    #editVideo {
+        -webkit-user-select: none;
+        -moz-user-select: none;
+            -ms-user-select: none;
+                user-select: none;
+        /* position: absolute; */
+    }
+
     
 </style>
 <script language="JavaScript">
-    
+
 </script>
 
 </head>
@@ -495,11 +528,28 @@
 <body>
     
 
-<div id="editVideo">
-    <input type="number" name="larg" id="larg"><br>
-    <input type="number" name="alt" id="alt"><br>
-    <button onclick="getSetCaption()">Adicionar Caption</button>
-    <ul class="payment-methods">
+<div id="editVideo" onmousedown="getEventDrag(this)">
+    <table width="100%" onmousedown="removeDrag()">
+        <tr style="margin">
+            <td width="50"><img src="rffeditor/imgEditor/config-tam-width.svg" alt="Largura" title="Largura" width="100%" hieght="100%"></td>
+            <td style="width: calc(100% - 50px);"><input type="number" name="larg" id="larg"></td>
+        </tr>
+        <tr>
+            <td width="50"><img src="rffeditor/imgEditor/config-tam-height.svg" alt="Altura" title="Altura" width="100%" hieght="100%"></td>
+            <td style="width: calc(100% - 50px);"><input type="number" name="alt" id="alt"></td>
+        </tr>
+        <tr>
+            <td width="50"><img src="rffeditor/imgEditor/config-resource-alt.svg" alt="Recurso alt" title="Recurso alt" width="100%" hieght="100%"></td>
+            <td style="width: calc(100% - 50px);"><input type="text" name="resourceAlt" id="resourceAlt" title="Adicionar recurso de alt" alt="Adicionar recurso de alt"></td>
+        </tr>
+        <tr>
+            <td width="50"><img src="rffeditor/imgEditor/config-resource-title.svg" alt="Recurso title" title="Recurso title" width="100%" hieght="100%"></td>
+            <td style="width: calc(100% - 50px);"><input type="text" name="resourceTitle" id="resourceTitle" title="Adicionar recurso de title" alt="Adicionar recurso de title"></td>
+        </tr>
+    </table>
+    
+    <button onclick="getSetCaption()" id="addCaption" onmousedown="removeDrag()">Adicionar Caption</button>
+    <ul class="payment-methods" onmousedown="removeDrag()">
         <li class="payment-method esquerda">
             <input name="payment_methods" type="radio" id="esquerda">
             <label for="esquerda">esquerda</label>
@@ -526,8 +576,8 @@
         </li>
     </ul><br>
     <span id="tipoObj" style="display:none;"></span>
-    <button onclick="salveUpdateIframe()">alterar</button>
-    <button onclick="cancelEditMedia()">Cancelar</button>
+    <button onclick="salveUpdateIframe()" onmousedown="removeDrag()">alterar</button>
+    <button onclick="cancelEditMedia()" onmousedown="removeDrag()">Cancelar</button>
 </div>
 
 <div id="efeitosTexto">
@@ -594,7 +644,7 @@
     <button id="testeSel" onclick="insertCellRight()">insertCellRight</button>
     <button id="testeSel" onclick="removeCell()">removeCell</button> -->
     <!-- <button id="testeSel" onclick="getTags()">getTags</button> -->
-    <!-- <button id="testeSel" onclick="configBackgroundTable()">Pegar table</button> -->
+    <!-- <button id="testeSel" onclick="openWindowConfigBackgroundTable()">Background table</button> -->
 
     <select name="typefontface" id="typefontface">
         <option value="padrao" name="padrao" id="padrao"  disabled selected>Font</option>
@@ -737,6 +787,8 @@
     var nodePai = '';    
 
     function editVideo(ob, event, tipoObj){
+        let resourceAlt = document.getElementById('resourceAlt');
+        let resourceTitle = document.getElementById('resourceTitle');
         document.getElementById('tipoObj').innerHTML = tipoObj;
         const janVideoEdit = document.getElementById('editVideo');
         // console.log(ob)
@@ -747,6 +799,8 @@
         let position = paipai.getBoundingClientRect();
         // console.log(position)
         janVideoEdit.setAttribute('style', 'display:block; top:'+position.y+'px; left:'+position.x+'px;');
+        resourceAlt = paipai.getAttribute('alt');
+        resourceTitle = paipai.getAttribute('title');
         // let ifr = paipai.children[1]
         // console.log(paipai.getAttribute('style'))
         let valores = paipai.getAttribute('style');
@@ -762,6 +816,30 @@
             }else if(item[0].includes("height")){
                 a=item[1].replace(' ', '').replace('px', '');
             }
+            if(item[0].includes("float")){
+                if(item[1].includes('left')){
+                    document.getElementById('esquerda').checked = true;
+                }else if(item[1].includes('right')){
+                    document.getElementById('direita').checked = true;
+                }
+            }
+            if(item[0].includes('margin')){
+                if(item[1].includes('auto')){
+                    document.getElementById('breakTextCenter').checked = true;
+                }else if(item[1].includes('0px')){
+                    document.getElementById('breakTextLeft').checked = true;
+                }else if(item[1].includes('0px 0px 0px auto')){
+                    document.getELementById('breakTextRight').checked = true;
+                }
+            }
+        }
+        let mediaAndCaption = paipai.children[1];
+        let captionMedia = mediaAndCaption.children[1];
+        // console.log(captionMedia.nodeName);
+        if(captionMedia!=null){
+            document.getElementById('addCaption').innerHTML = 'Remover caption';
+        }else{
+            document.getElementById('addCaption').innerHTML = 'Adicionar caption';
         }
         document.getElementById('larg').value = l;
         document.getElementById('alt').value = a;
@@ -797,6 +875,8 @@
         let breakTextRight = document.getElementById('breakTextRight');
         let breakTextCenter = document.getElementById('breakTextCenter');
         let direita = document.getElementById('direita');
+        let resourceAlt = document.getElementById('resourceAlt');
+        let resourceTitle = document.getElementById('resourceTitle');
         let direcao = null;
         let margin = null;
         let order = null;
@@ -831,6 +911,8 @@
         nodePai.style.width=larg;
         nodePai.style.height=alt;
         nodePai.style.float=direcao;
+        nodePai.setAttribute('alt', resourceAlt.value);
+        nodePai.setAttribute('title', resourceTitle.value);
         document.getElementById('editVideo').setAttribute('style', 'display:none;')
         cancelEditMedia()
     }

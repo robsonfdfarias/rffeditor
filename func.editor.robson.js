@@ -743,13 +743,7 @@ function insertTableNovo(numRow, numCol) {
     table+='</ul>';
     table+='</li>';
 
-    table+='<li><img src="rffeditor/imgEditor/configTable.svg" height="40" title="Configurar tabela">';
-    table+='<ul>';
-    table+='<li><button id="testeSel" onclick="insertTdAfter()"><img src="rffeditor/imgEditor/inserttableColumnAfter.svg" height="40" title="Inserir coluna depois"></button></li>';
-    table+='<li><button id="testeSel" onclick="insertTdBefore()"><img src="rffeditor/imgEditor/inserttableColumnBefore.svg" height="40" title="Inserir coluna antes"></button></li>';
-    table+='<li><button id="testeSel" onclick="delTd()"><img src="rffeditor/imgEditor/deleteTableColumn.svg" height="40" title="Apagar coluna"></button></li>';
-    table+='</ul>';
-    table+='</li>';
+    table+='<li><button id="testeSel" onclick="openWindowConfigBackgroundTable()"><img src="rffeditor/imgEditor/configTable.svg" height="40" title="Configurar tabela"></button></li>';
     table+='</ul>';
     table+='<button onclick="fecharJanTab(this)" draggable="false" droppable="false">X</button>';
     table+='</div>';
@@ -1537,18 +1531,37 @@ function configBackgroundTable(obj){
     let table = verifyGetNode('TABLE');
     if(table!=null){
         if(obj=='limpar'){
-            table.setAttribute('background', null);
+            table.style.background = null;
         }else{
-            obj='../imagens/2023/11/28/2023-11-28_09-06-07_310471.svg.svg';
-            // table.style.backgroundImage = "url('"+obj+"')";
-            // table.style.background = "no-repeat left url('"+obj+"')";
-            // table.style.background = "url('"+obj+"') left/contain no-repeat";
-            // table.style.background = "url("+obj+") left top/contain no-repeat padding-box";
-            // let bk = table.style.background;
-            // table.style.background=bk.replace('(\"', '(')
-            table.style.backgroundImage = 'url('+obj+')';
-            // table.setAttribute('background', obj);
+            table.style.background = obj;
+            let styleBack = table.getAttribute('style').replace('(\"', '(\'');
+            styleBack = styleBack.replace('\")', '\')');
+            styleBack = styleBack.replace('left ', 'left+');
+            styleBack = styleBack.replace('top ', 'top+');
+            // console.log(table.getAttribute('style'));
+            // console.log(styleBack);
+            table.setAttribute('style', styleBack);
         }
+    }
+}
+
+
+
+function openWindowConfigBackgroundTable(){
+    let table=verifyGetNode('TABLE');
+    if(table!=null){
+        // let style = table.getAttribute('style');
+        // let charStyle = style.split(';');
+        // for(let i=0;i<charStyle.length;i++){
+        //     let propStyle = charStyle.split(':');
+        //     if(propStyle[0]=='background' || propStyle[0]==' background'){
+        //         localStorage.setItem('background', propStyle[1]);
+        //     }
+        // }
+        localStorage.setItem('style', table.getAttribute('style'));
+        window.open('rffeditor/windowConfigTable.php', 'janela', 'height=350, width=500, top=50, left=100, scrollbar=no, fullscreen=no');
+    }else{
+        alert('Nenhuma Tabela selecionada! Clique em uma tabela para editar sua propriedade de background!')
     }
 }
 
@@ -1710,13 +1723,14 @@ function fecharJanTab(elem){
 
 
 function getSetCaption(){
-    console.log(nodePai.children.length)
-    console.log(parseInt(nodePai.style.height)+' de altura')
+    // console.log(nodePai.children.length)
+    // console.log(parseInt(nodePai.style.height)+' de altura')
     let dvMedia = nodePai.children[1];
     if(dvMedia.children.length>1){
         let caption = dvMedia.children[1];
-        console.log(caption);
+        // console.log(caption);
         dvMedia.removeChild(caption);
+        document.getElementById('addCaption').innerHTML = 'Adicionar caption';
     }else{
         let altura = parseInt(nodePai.style.height);
         let dvCaption = document.createElement('div');
@@ -1728,19 +1742,20 @@ function getSetCaption(){
         dvCaption.setAttribute('droppable', 'false');
         // dvCaption.setAttribute('onclick', 'checkContentCaption(this)');
         dvCaption.classList.add('captionText');
-        dvCaption.style.padding = '3px 10px';
-        dvCaption.style.backgroundColor = '#f7f7f7';
-        dvCaption.style.color = '#333';
-        dvCaption.style.fontStyle = 'italic';
-        dvCaption.style.fontSize = '.75em';
+        // dvCaption.style.padding = '3px 10px';
+        // dvCaption.style.backgroundColor = '#f7f7f7';
+        // dvCaption.style.color = '#333';
+        // dvCaption.style.fontStyle = 'italic';
+        // dvCaption.style.fontSize = '.75em';
         // dvCaption.style.fontWeight = 'bold';
         // dvCaption.style.position = 'absolute';
         // dvCaption.style.top = altura+'px';
         // dvCaption.style.left = '0px';
-        dvCaption.style.minHeight = '20px';
-        dvCaption.style.width = '100%-20px';
+        // dvCaption.style.minHeight = '20px';
+        // dvCaption.style.width = '100%-20px';
         dvCaption.setAttribute('onkeyup', 'checkContentCaption(this)');
         dvMedia.insertBefore(dvCaption, dvMedia.children[1]);
+        document.getElementById('addCaption').innerHTML = 'Remover caption'
     }
 }
 
@@ -1755,4 +1770,54 @@ function checkContentCaption(elem){
         elem.classList.add('captionText');
         t=false;
     }
+}
+
+
+
+
+/****** Adicionando o recurso de arrastar a janela de editar Media (editVideo) **************/
+var dragMe = document.getElementById("editVideo"),
+  /* o x inicial do drag*/
+  dragOfX = 0,
+  /* o y inicial do drag */
+  dragOfY = 0;
+
+/* ao segurar o elemento */
+function dragStart1(e) {
+    /* define o x inicial do drag */
+    dragOfX = e.pageX - dragMe.offsetLeft;
+    /* define o y inicial do drag */
+    dragOfY = e.pageY - dragMe.offsetTop;
+    
+    /* adiciona os eventos */
+    dragMe.addEventListener("mousemove", dragMove1);
+    dragMe.addEventListener("mouseup", dragEnd1);
+}
+    
+/* ao ser arrastado */
+function dragMove1(e) {
+    /* atualiza a posição do elemento */
+    dragMe.style.left = (e.pageX - dragOfX) + 'px';
+    dragMe.style.top = (e.pageY - dragOfY) + 'px';
+}
+    
+/* ao terminar o drag */
+function dragEnd1() {
+    /* remove os eventos */
+    // dragMe.removeEventListener("mousedown", dragStart1);
+    dragMe.removeEventListener("mousemove", dragMove1);
+    dragMe.removeEventListener("mouseup", dragEnd1);
+}
+    
+/* adiciona o evento que começa o drag */
+dragMe.addEventListener("mousedown", dragStart1);
+
+function getEventDrag(dvd){
+    dragMe.addEventListener("mousedown", dragStart1);
+}
+function removeDrag() {
+    /* remove os eventos */
+    dragMe.removeEventListener("mousedown", dragStart1);
+    dragMe.removeEventListener("mousemove", dragMove1);
+    dragMe.removeEventListener("mouseup", dragEnd1);
 }
