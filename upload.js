@@ -111,7 +111,7 @@ function insertImg() {
     media += '<button onclick="fecharJanVid(this)" draggable="false" droppable="false">X</button>'
     media += '</div>'
     // media += '<img src="'+srcImg+'" width="98%" height="98%" onclick="openWindowEditImage(this)" class="imagem">';
-    media += '<div id="mediaAndCaption"><img src="'+srcImg+'" width="98%" height="auto" class="imagem"></div>';
+    media += '<div id="mediaAndCaption"><img src="'+srcImg+'" width="100%" height="auto" class="imagem"></div>';
   divPai.innerHTML = media;
   range.insertNode(divPai);
 }

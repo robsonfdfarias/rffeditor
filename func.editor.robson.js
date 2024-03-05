@@ -336,12 +336,12 @@ function negritaBt(obj, nodeEl){
     // console.log(obj)
     if(obj=='font'){
         if(nodeEl.getAttribute('face')!=null){
-            console.log('O tipo da fonte é: '+nodeEl.getAttribute('face'))
+            // console.log('O tipo da fonte é: '+nodeEl.getAttribute('face'))
             let selFont = document.getElementById('typefontface');
             selFont.children[nodeEl.getAttribute('face')].selected = true;
         }
         if(nodeEl.getAttribute('size')!=null){
-            console.log('O tipo da fonte é: '+nodeEl.getAttribute('size'))
+            // console.log('O tipo da fonte é: '+nodeEl.getAttribute('size'))
             let selFont = document.getElementById('tamFont');
             let n =  nodeEl.getAttribute('size');
             n=n-1;
@@ -376,7 +376,7 @@ quadro.addEventListener('keydown', function(e){
     selectElem();
 })
 quadro.addEventListener('mouseup', function(){
-    console.log(tags)
+    // console.log(tags)
     selectElem();
     verifyElementFocus();
 })
@@ -796,7 +796,7 @@ function insertTrAfter() {
         var tds = '';
 
         let rowspan = selecao.getAttribute('rowspan');
-        console.log('Quantidade de linhas: '+rowspan)
+        // console.log('Quantidade de linhas: '+rowspan)
         let r = 0;
         if(rowspan != null && rowspan!=0){
             let j = parseInt(rowspan, 10)+1;
@@ -818,7 +818,7 @@ function insertTrAfter() {
         }
         obj.innerHTML = tds
         tbody.insertBefore(obj, tr.nextElementSibling);
-        console.log('Deu certo')
+        // console.log('Deu certo')
     }
 }
 
@@ -843,7 +843,7 @@ function insertTrBefore() {
         }
         obj.innerHTML = tds
         tbody.insertBefore(obj, tr);
-        console.log('Deu certo')
+        // console.log('Deu certo')
     
     }
 }
@@ -866,13 +866,13 @@ function insertTdBefore() {
         for(let j=0; j<tbody.children[0].children.length; j++){
             if(n!=null){
                 conta++;
-                console.log(conta)
+                // console.log(conta)
             }else{
                 break;
             }
             n = n.previousElementSibling
         }
-        console.log('o numero da celula é: '+conta)
+        // console.log('o numero da celula é: '+conta)
         let obj = [];
         for(let i=0;i<tbody.children.length;i++){
             let tdnew = document.createElement('td')
@@ -887,10 +887,10 @@ function insertTdBefore() {
             obj.push(tdnew)
         }
         for(let i=0;i<tbody.children.length;i++){
-            console.log(tbody.children[i].children[conta])
+            // console.log(tbody.children[i].children[conta])
             tbody.children[i].insertBefore(obj[i], tbody.children[i].children[conta])
         }
-        console.log('Deu certo')
+        // console.log('Deu certo')
     }
 }
 
@@ -971,7 +971,7 @@ function removeCell(){
         let tbody = tr.parentNode;
         let posTD = getPositionTD(td)-1;
         let posTr = getPositionTr(tr);
-        console.log('Remove celular '+posTD)
+        // console.log('Remove celular '+posTD)
         if(posTr>0){
             if(posTD>0 && tr.children.length>2){
                 tr.removeChild(td);
@@ -980,7 +980,7 @@ function removeCell(){
                     tbody.removeChild(tr);
                 }
             }
-            console.log('Número de celulas na tr: '+tr.children.length)
+            // console.log('Número de celulas na tr: '+tr.children.length)
         }
     }
 }
@@ -1007,10 +1007,10 @@ function verifyGetTD(){
 
 function merge(tipo, type){
     var selecao = verifyGetTD();
-    console.log(selecao.nodeName);
+    // console.log(selecao.nodeName);
     // selecao = selecao.parentNode;
     if(selecao.nodeName=='TD'){
-        console.log('entrou no primeiro '+selecao.nodeName)
+        // console.log('entrou no primeiro '+selecao.nodeName)
         if(type=='add'){
             mergeType(tipo, selecao)
         }else{
@@ -1031,10 +1031,10 @@ function mergeType(tipo, td){
             conta=conta+(rowspan-1);
         }
         if(tbody.children[(conta+1)]!=null){
-            console.log(rowspan+'------')
+            // console.log(rowspan+'------')
             if(rowspan!=null && rowspan!=0){
                 rowspan = parseInt(rowspan, 10)+1;
-                console.log('***************'+rowspan)
+                // console.log('***************'+rowspan)
                 td.setAttribute('rowspan', rowspan)
             }else{
                 td.setAttribute('rowspan', 2)
@@ -1068,7 +1068,7 @@ function mergeType(tipo, td){
         //     tdPrev = tdPrev.previousElementSibling;
         // }
         let conta = getPositionTD(td);
-        console.log(conta+' posição ******************************************')
+        // console.log(conta+' posição ******************************************')
         if(tr.children[(conta)]!=null){
             let colspan = td.getAttribute('colspan');
             let rowspan = td.getAttribute('rowspan');
@@ -1079,7 +1079,7 @@ function mergeType(tipo, td){
             let posTd = getPositionTD(td)-1;
             if(colspan!=null && colspan!=''){
                 colspan++;
-                console.log(colspan)
+                // console.log(colspan)
             }else{
                 colspan = 2;
             }
@@ -1097,8 +1097,8 @@ function mergeType(tipo, td){
                         }else if(r<2){
                             tbody.children[posTr+r].removeChild(tbody.children[posTr+r].children[(conta-r)]);
                         }else{
-                            console.log(tbody.children[posTr+r].children[(conta)])
-                            console.log(conta)
+                            // console.log(tbody.children[posTr+r].children[(conta)])
+                            // console.log(conta)
                             tbody.children[posTr+r].removeChild(tbody.children[posTr+r].children[0]);
                         }
                     }
@@ -1110,7 +1110,7 @@ function mergeType(tipo, td){
                 tr.removeChild(tr.children[conta]); // alterado
             }
         }else{
-            console.log('Não existem td depois do atual')
+            // console.log('Não existem td depois do atual')
         }
         
     }
@@ -1191,7 +1191,7 @@ function unMergeType(tipo, td){
                 let positionTr = getPositionTr(tr);
                 if(rowspan>2){
                     for(let p = 0; p<rowspan; p++){
-                        console.log(getPositionTD(td)-p)
+                        // console.log(getPositionTD(td)-p)
                         if(p<2){
                             tbody.children[(positionTr+p)].insertBefore(tdNew.cloneNode(true), tbody.children[(positionTr+p)].children[(getPositionTD(td)-p)]);
                         }else{
@@ -1214,12 +1214,12 @@ function getNumMaxTDs(tbody){
     //Pega a quantidade padrão de TDs nas TRs (o numero máximo de tds)
     let numTdsPadrao = 0;
     for(let j=0; j<tbody.children.length; j++){
-        console.log('Numero de tds: '+tbody.children[j].children.length)
+        // console.log('Numero de tds: '+tbody.children[j].children.length)
         if(tbody.children[j].children.length>numTdsPadrao){
             numTdsPadrao = tbody.children[j].children.length;
         }
     }
-    console.log('QUantidade de TDs padrão: '+numTdsPadrao)
+    // console.log('QUantidade de TDs padrão: '+numTdsPadrao)
     return numTdsPadrao;
 }
 
@@ -1339,14 +1339,14 @@ function actionClickTd(elem){
                 igual=true;
                 posi = tdSel.indexOf(elem);
             }
-            console.log(tdSel[i])
+            // console.log(tdSel[i])
         }
         if(igual==true){
             tdSel.splice(posi, 1);
             elem.classList.remove('selectedCel');
         }else{
             tdSel.push(elem)
-            console.log('célula selecionada: '+elem.cellIndex);
+            // console.log('célula selecionada: '+elem.cellIndex);
             elem.classList.add('selectedCel');
         }
         // console.log(elem)
@@ -1357,7 +1357,7 @@ function actionClickTd(elem){
 
 function keydownTable(event, elem){
     if(event.keyCode==17){
-        console.log(event.keyCode)
+        // console.log(event.keyCode)
         // removeSelectedCel();
         // tdSel=[];
         ctrlActive=true;
@@ -1370,14 +1370,14 @@ function keydownTable(event, elem){
 function keyupTable(event, elem){
     if(event.keyCode==17){
         ctrlActive=false;
-        console.log(tdSel)
+        // console.log(tdSel)
     }
 }
 
 function removeSelectedCel(){
     // console.log('selecionados: '+tdSel.length)
     for(let i=0; i<tdSel.length; i++){
-        console.log(tdSel[i])
+        // console.log(tdSel[i])
         tdSel[i].classList.remove('selectedCel')
     }
     tdSel=[];
@@ -1405,7 +1405,7 @@ function selectElementMoveMouse(elem){
             // elem.classList.remove('selectedCel');
         }else{
             tdSel.push(elem)
-            console.log('célula selecionada: '+elem.cellIndex);
+            // console.log('célula selecionada: '+elem.cellIndex);
             elem.classList.add('selectedCel');
         }
         // console.log(elem)
@@ -1426,7 +1426,7 @@ function verifyElementFocus(){
             selectElementMoveMouse(event.toElement)
         }
         tbody.addEventListener('mousedown', function(event){
-            console.log(tags)
+            // console.log(tags)
             tbody.addEventListener('mousemove', listenerMov, false);
         })
         tbody.addEventListener('mouseup', function(){
@@ -1452,7 +1452,7 @@ function getWindowBckgroundColorTDsel(){
 function backGroundColorTdSel(cor){
     if(tdSel.length>0){
         for(let i=0; i<tdSel.length; i++){
-            console.log(cor)
+            // console.log(cor)
             if(cor=='limpar'){
                 tdSel[i].style.backgroundColor=null;
             }else{
@@ -1476,7 +1476,7 @@ function openConfigTdSel(){
 function configBorderTdSel(config){
     if(tdSel.length>0){
         for(let i=0; i<tdSel.length; i++){
-            console.log(config)
+            // console.log(config)
             if(config=='limpar'){
                 tdSel[i].style.border=null;
             }else{
@@ -1502,7 +1502,7 @@ function configPaddingTdSel(config){
 function rotateTdSel(config){
     if(tdSel.length>0){
         for(let i=0; i<tdSel.length; i++){
-            console.log(tdSel[i].children[0])
+            // console.log(tdSel[i].children[0])
             if(config=='limpar'){
                 tdSel[i].style.writingMode=null;
                 tdSel[i].style.textOrientation=null;
@@ -1559,7 +1559,7 @@ function openWindowConfigBackgroundTable(){
         //     }
         // }
         localStorage.setItem('style', table.getAttribute('style'));
-        window.open('rffeditor/windowConfigTable.php', 'janela', 'height=350, width=500, top=50, left=100, scrollbar=no, fullscreen=no');
+        window.open('rffeditor/windowConfigTable.php', 'janela', 'toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,resizable=yes,height=350,width=500,top=50,left=100,fullscreen=no');
     }else{
         alert('Nenhuma Tabela selecionada! Clique em uma tabela para editar sua propriedade de background!')
     }
@@ -1655,7 +1655,7 @@ function insertEmotions(img){
         image.setAttribute('style', 'margin-bottom: -5px;');
         range.insertNode(image);
     }else{
-        console.log("selecione uma imagem e Clique no botão Carregar e visualizar antes de inserir")
+        // console.log("selecione uma imagem e Clique no botão Carregar e visualizar antes de inserir")
     }
 }
 

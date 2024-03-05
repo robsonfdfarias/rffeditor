@@ -8,7 +8,7 @@
 <body>
     <!--<div id="preview" style="max-width:800px;">-</div>
     <div id="lista" style="max-width:800px;align-items: center; display: flex; flex-direction: row; flex-wrap: wrap; justify-content: center;"></div>-->
-    <div id="lista" style="max-width:100%;  background-color: white; padding:20px;"></div>
+    <div id="lista" style="max-width:100%;  background-color: white; padding:20px; height: 93%;"></div>
 
     <script>
         var folder = 'imagens';

@@ -64,7 +64,7 @@
 
     #inseriImagemCentro{
         width: 600px;
-        height: 400px;
+        min-height: 400px;
         background-color: #fff;
         border: 1px solid #000;
         margin: auto;
@@ -77,6 +77,7 @@
     #inseriImagemCentro input, button{
         padding: 10px;
         font-size: 1.1rem;
+        margin-bottom: 10px;
     }
 
 
@@ -122,10 +123,14 @@
     }
     #porcento{
         width:100%;
-        height: 260px;
+        min-height: 260px;
     }
     input[type="text"]{
         width:150px;
+    }
+
+    #lista{
+        overflow: auto;
     }
 
     #lista a{
@@ -144,20 +149,57 @@
         transition: ease-in-out 0.5s;
     }
 
-    #lista img {
+    /* #lista img {
         cursor: pointer;
         transition: ease 0.3s;
-    }
+    } */
 
-    #lista img:hover{
+    /* #lista img:hover{
         filter:  invert(25%) sepia(111%) saturate(100%) hue-rotate(29deg);
         transition: ease 0.3s;
+    } */
+
+    #containerObj{
+        border-radius: 0px;
+    }
+
+    #containerObj #tituloTarja {
+        top: 0;
+        transition: ease-in-out 0.2s;
+    }
+
+    #containerObj:hover #tituloTarja{
+        top: -20px;
+        box-shadow: -2px -2px 3px rgba(0,0,0,0.5);
+        transition: ease-in-out 0.2s;
+    }
+
+    #containerObj .imgFundo{
+        background-image: var(--rffeditor-bk-image);
+        background-repeat: no-repeat;
+        background-size: 130%;
+        background-color:#a1f1ff; 
+        transition: ease-in-out 0.5s all;
+        border-bottom: 1px inset #cdcdcd;
+    }
+
+    #containerObj:hover .imgFundo{
+        background-size: 90%;
+        background-color: #fff; /*#029669;*/
+        transition: ease-in-out 0.5s all;
     }
     
 </style>
 </head>
 <body>
 <div id="geralInseriImagem">
+        <div id="filesCentral" style="position: absolute; z-index: 10001; left:0; top:0; display:none; width: 100%; height: 100%;">
+        <div id="fecharFolders" style="position:absolute;right:0;top:0; padding:10px; background-color: #cdcdcd; cursor: pointer;" onclick="fecharFoldersJan()">Fechar</div>
+            <?php
+                include_once("listaImgs.php");
+            ?>
+            <br>
+        </div>
     <div id="glassImageBackground"></div>
     <div id="inseriImagemCentro">
         <!-- <form action="ex2.class.php" method="post" id="upload">  -->
@@ -173,13 +215,7 @@
         </span>
         <input type="text" placeholder="Digite a Largura ex(400)" id="largura">
         <input type="text" placeholder="Digite a altura ex(300)" id="altura">
-        <button onclick="insert()">Inserir Imagem</button><button onclick="cancel()">Cancelar</button>
-        <div id="filesCentral" style="margin-top: 70px;">
-            <?php
-                include_once("listaImgs.php");
-            ?>
-            <br>
-        </div>
+        <button onclick="insert()">Inserir Imagem</button><button onclick="cancel()">Cancelar</button><div onclick="openFolders()" style="padding:10px; background-color: #cdcdcd; cursor: pointer;">Pastas</div>
     </div>
     
 </div>
@@ -213,6 +249,14 @@
 
     function cancel(){
         window.close();
+    }
+
+    function openFolders(){
+        document.getElementById('filesCentral').style.display='block';
+    }
+
+    function fecharFoldersJan(){
+        document.getElementById('filesCentral').style.display='none';
     }
     //var dados = JSON.stringify($('input').val());
     //sessionStorage.setItem('chave', dados );
