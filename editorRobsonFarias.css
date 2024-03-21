@@ -95,10 +95,11 @@
     -ms-word-break: break-all;
     scrollbar-width:thin;
     scroll-behavior: smooth;
-    hyphenate-limit-chars: 8 4 4;
+    hyphenate-limit-chars: 10 5 5;
     -webkit-hyphens: manual;
     -ms-hyphens: manual;
     hyphens:manual;
+    margin-top: 10px;
 }
 
 #cores{
@@ -815,27 +816,60 @@ article div{
     -webkit-hyphenate-limit-chars: 6 3 3;
     -webkit-hyphenate-limit-lines: 2;
     -webkit-hyphenate-limit-last: always;   
-    -webkit-hyphenate-limit-zone: 2%;
+    -webkit-hyphenate-limit-zone: 5%;
 
     -moz-hyphens: auto;
     -moz-hyphenate-limit-chars: 6 3 3;
     -moz-hyphenate-limit-lines: 2;  
     -moz-hyphenate-limit-last: always;
-    -moz-hyphenate-limit-zone: 2%;
+    -moz-hyphenate-limit-zone: 5%;
 
     -ms-hyphens: auto;
     -ms-hyphenate-limit-chars: 6 3 3;
     -ms-hyphenate-limit-lines: 2;
     -ms-hyphenate-limit-last: always;   
-    -ms-hyphenate-limit-zone: 2%;
+    -ms-hyphenate-limit-zone: 5%;
 
     hyphens: auto;
     hyphenate-limit-chars: 6 3 3;
     hyphenate-limit-lines: 2;
     hyphenate-limit-last: always;   
-    hyphenate-limit-zone: 2%;
+    hyphenate-limit-zone: 5%;
 
     text-indent: 30px;
     line-height: 1.3em;
     /* margin-bottom: 1.5em; */
+}
+
+
+
+/****************************************** Configura sumário INICIO *****************************************************/
+#sumario{
+    margin-left: -30px;
+}
+#TOC { 
+    border: solid black 1px; 
+    margin: 0px; 
+    padding: 10px;
+    padding-left: 40px;
+    background-color: rgb(233, 233, 232);
+} 
+.TOCEntry { font-family: sans-serif; } 
+.TOCEntry a { text-decoration: none; } 
+.TOCLevel1 { font-size: 16pt; font-weight: bold; } 
+.TOCLevel2 { font-size: 12pt; margin-left: .5in; } 
+.TOCLevel3 { font-size: 12pt; margin-left: 1in; } 
+.TOCLevel4 { font-size: 12pt; margin-left: 1.5in; } 
+.TOCSectNum:after { content: ": "; } 
+.TOCSectNum { display: none } 
+/****************************************** Configura sumário FIM *****************************************************/
+
+
+.classBreakPage{
+    page-break-inside: auto;
+    page-break-before: always;
+}
+
+#viewRefBreakPage{
+    display: none;
 }

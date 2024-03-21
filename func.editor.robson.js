@@ -1821,3 +1821,385 @@ function removeDrag() {
     dragMe.removeEventListener("mousemove", dragMove1);
     dragMe.removeEventListener("mouseup", dragEnd1);
 }
+
+
+/****************************************** Adiionar sumario INICIO *****************************************************/
+
+
+
+function headingCab(local) {
+    // A função anônima define um escopo local 
+    // Localiza o elemento contêiner TOC. 
+    // Se não existe, cria um no início do documento. 
+    var toc = document.getElementById("TOC"); 
+    if (!toc) { 
+        toc = document.createElement("div"); 
+        toc.id = "TOC"; 
+        // toc.innerHTML='<h1 id="sumario">Sumario</h1>';
+        toc.innerHTML='Sumário';
+        local.insertBefore(toc, local.firstChild); 
+    } 
+    // Localiza todos os elementos de cabeçalho de seção 
+    var headings; 
+    if (local.querySelectorAll) // Podemos fazer isso do modo fácil? 
+        headings = local.querySelectorAll("h1,h2,h3,h4,h5,h6"); 
+    else // Caso contrário, localiza os cabeçalhos da maneira difícil 
+        headings = findHeadings(local, []); 
+    // Percorre o corpo do documento recursivamente, procurando cabeçalhos 
+    function findHeadings(root, sects) { 
+        for(var c = root.firstChild; c != null; c = c.nextSibling) { 
+            if (c.nodeType !== 1) continue; 
+            if (c.tagName.length == 2 && c.tagName.charAt(0) == "H") 
+                sects.push(c); 
+            else 
+            findHeadings(c, sects); 
+        }
+        return sects;
+    }
+    // Inicializa um array que monitora números de seção. 
+    var sectionNumbers = [0,0,0,0,0,0]; 
+    // Agora itera pelos elementos de cabeçalho de seção que encontramos. 
+    for(var h = 0; h < headings.length; h++) { 
+        var heading = headings[h]; 
+        // Pula o cabeçalho de seção se estiver dentro do contêiner de TOC. 
+        if (heading.parentNode == toc) continue; 
+        // Descobre de que nível é o cabeçalho. 
+        var level = parseInt(heading.tagName.charAt(1)); 
+        if (isNaN(level) || level < 1 || level > 6) continue; 
+        // Incrementa o número de seção para esse nível de cabeçalho 
+        // e zera todos os números de nível de cabeçalho inferiores. 
+        sectionNumbers[level-1]++; 
+        for(var i = level; i < 6; i++) 
+            sectionNumbers[i] = 0; 
+        // Agora combina os números de seção de todos os níveis de cabeçalho 
+        // para produzir um número de seção como 2.3.1. 
+        var sectionNumber = sectionNumbers.slice(0,level).join(".") 
+        // Adiciona o número de seção no título do cabeçalho de seção. 
+        // Colocamos o número em um <span> para que possa ser estilizado. 
+        // var span = document.createElement("span"); 
+        // span.className = "TOCSectNum"; 
+        // span.innerHTML = sectionNumber;
+        // heading.insertBefore(span, heading.firstChild); 
+
+        // Encerra o cabeçalho em uma âncora nomeada para que possamos nos vincular a ele. 
+        var anchor = document.createElement("a"); 
+        anchor.name = "TOC"+sectionNumber; 
+        heading.parentNode.insertBefore(anchor, heading); 
+        anchor.appendChild(heading); 
+        // Agora cria um link para essa seção. 
+        var link = document.createElement("a"); 
+        link.href = "#TOC" + sectionNumber; 
+        // Destino do link 
+        link.innerHTML = sectionNumber+' - '+heading.innerHTML; 
+        // O texto do link é o mesmo do cabeçalho 
+        // Coloca o link em um div que pode ser estilizado de acordo com o nível. 
+        var entry = document.createElement("div"); 
+        entry.className = "TOCEntry TOCLevel" + level; 
+        entry.appendChild(link); 
+        // E adiciona o div no contêiner de TOC. 
+        toc.appendChild(entry); 
+    }
+}
+// headingCab(document.getElementById("texto"));
+
+
+function setOrRemoveHeading(){
+    let texto = document.getElementById("texto");
+    if(document.getElementById('TOC')==null){
+        headingCab(document.getElementById("texto"));
+        document.getElementById('sumario').style.backgroundColor='green';
+    }else{
+        // texto.removeChild(document.getElementById('TOC'));
+        document.getElementById('sumario').style.backgroundColor=null;
+        deleteHeadingCab(texto);
+    }
+    
+}
+
+
+function deleteHeadingCab(local) {
+    // A função anônima define um escopo local 
+    // Localiza o elemento contêiner TOC. 
+    // Se não existe, cria um no início do documento. 
+    var toc = document.getElementById("TOC"); 
+    if (!toc) { 
+        exit
+    } 
+    // Localiza todos os elementos de cabeçalho de seção 
+    var headings; 
+    if (local.querySelectorAll) // Podemos fazer isso do modo fácil? 
+        headings = local.querySelectorAll("h1,h2,h3,h4,h5,h6"); 
+    else // Caso contrário, localiza os cabeçalhos da maneira difícil 
+        headings = findHeadings(local, []); 
+    // Percorre o corpo do documento recursivamente, procurando cabeçalhos 
+    function findHeadings(root, sects) { 
+        for(var c = root.firstChild; c != null; c = c.nextSibling) { 
+            if (c.nodeType !== 1) continue; 
+            if (c.tagName.length == 2 && c.tagName.charAt(0) == "H") 
+                sects.push(c); 
+            else 
+            findHeadings(c, sects); 
+        }
+        return sects;
+    }
+    // Inicializa um array que monitora números de seção. 
+    // var sectionNumbers = [0,0,0,0,0,0]; 
+    
+    for(var h = 0; h < headings.length; h++) { 
+        var heading = headings[h]; 
+        // console.log(heading.parentNode.nodeName)
+        if(heading.parentNode.nodeName=='A'){
+            let tagA = heading.parentNode;
+            let geral = tagA.parentNode;
+            geral.insertBefore(heading, tagA);
+            geral.removeChild(tagA);
+            // console.log(heading)
+            // console.log(tagA)
+        }
+
+    }
+    local.removeChild(toc);
+}
+
+
+// marca o botão do sumário se o conteúdo tiver um sumário
+function selectBtSumario(){
+    if(document.getElementById("TOC")!=null){
+        document.getElementById('sumario').style.backgroundColor='green';
+    }
+}
+
+/****************************************** Adiionar sumario FIM *****************************************************/
+
+
+function insertBreakPage(){
+    let node = verifyGetNode('DIV');
+    console.log(node)
+    let breakPage = document.createElement('div');
+    // breakPage.setAttribute('class', 'item');
+    // breakPage.setAttribute('id', 'item');
+    breakPage.setAttribute('id', 'breakPage');
+    breakPage.setAttribute('dragstart', 'dragStart(event)');
+    breakPage.setAttribute('drag', 'drag(event)');
+    breakPage.setAttribute('dragend', 'dragend(event)');
+    breakPage.setAttribute('draggable', 'true');
+    breakPage.setAttribute('droppable', 'true');
+    breakPage.setAttribute('ondragover', 'allowDrop2(event)');
+    breakPage.setAttribute('contenteditable', 'false');
+    breakPage.setAttribute('title', 'Clique e arrasta para mover');
+    breakPage.classList.add('classBreakPage');
+    // breakPage.innerHTML = '<div id="viewRefBreakPage" draggable="false" droppable="false">';
+    // breakPage.innerHTML+='<div id="textoBreakPageUp" draggable="false" droppable="false">Quebra de página</div><hr class="viewLineBreak" draggable="false" droppable="false">';
+    // breakPage.innerHTML+='Quebra de Linha';
+    // breakPage.innerHTML+='</div>';
+    node.insertBefore(breakPage, node.firstChild);
+}
+
+// function printPageDiv(){
+//     let texto = document.getElementById('texto');
+//     console.log(texto)
+//     // texto = runImgReturnCanvas(texto)
+//     let conteudo = '<html>'
+//     conteudo += '<head>'
+//     conteudo += '<link rel="stylesheet" type="text/css" href="rffeditor/editorRobsonFarias.css" />'
+//     conteudo += '</head>'
+//     conteudo += '<body>'
+//     conteudo += texto.innerHTML;
+//     conteudo += '</body>'
+//     conteudo += '</html>'
+    
+//     // download(conteudo, 'livro.pdf', 'data:application/pdf;base64');
+
+//     let jan = window.open('','Imprimir','height=500,width=500,fullscreen=yes');
+//     jan.document.write('<html>')
+//     jan.document.write('<head>')
+//     jan.document.write('<title>Impressão PDF</title>')
+//     jan.document.write('<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>')
+//     jan.document.write('<link rel="stylesheet" type="text/css" href="rffeditor/editorRobsonFarias.css" />')
+//     jan.document.write('</head>')
+//     jan.document.write('<body>')
+//     jan.document.write('<div id="texto">'+texto.innerHTML+'</div>');
+//     jan.document.write('<script src="rffeditor/upload.js"></script>')
+//     jan.document.write('<script src="rffeditor/func.editor.robson.js"></script>')
+//     jan.document.write('<script src="rffeditor/dragDrop.js"></script>')
+//     jan.document.write('<script>printPDF()</script>')
+//     jan.document.write('</body>')
+//     jan.document.write('</html>')
+//     // jan.document.appendChild(texto);
+//     jan.addEventListener("afterprint", (event) => {
+//         console.log(event)
+//         event.pageXOffset=50
+//     });
+//     jan.focus();
+// }
+
+// function printPDF(){
+//     var element = document.getElementById('texto');
+//     // const content = document.getElementById('texto')
+//     // console.log(content)
+//     // var options = {
+//     //     margin: [10, 10, 10, 10],
+//     //     filename:     'myfile.pdf',
+//     //     image:        { type: 'jpeg', quality: 3 },
+//     //     pagebreak: { mode: ['avoid-all', 'css', 'legacy'], before: '#breakPage', avoid: 'div' },
+//     //     html2canvas:  { scale: 1 },
+//     //     jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
+//     // }
+//     // html2pdf().set(options).from(content).save();
+//     html2pdf()
+//         .from(element)
+//         .set({
+//             margin:       [30, 15, 25, 15],
+//             filename:     'arquivo.pdf',
+//             image:        { type: 'jpeg',quality: 0.98 },
+//             // html2canvas:  { scale: 2, logging: true, dpi: 192, letterRendering: true },
+//             html2canvas:  { scale: 2, logging: true, dpi: 300, letterRendering: true, allowTaint: false, removeContainer: true },
+//             jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' },
+//             // pagebreak: { before: '.page-break', avoid: 'table' }
+//             pagebreak: { mode: ['avoid-all', 'css', 'legacy'], avoid: ['table', 'div', 'img', 'text', 'tr'], before: ['#breakPage', '.tabela2'] }
+//         })
+//         .toPdf()
+//         .get('pdf').then(function (pdf) {
+//           var totalPages = pdf.internal.getNumberOfPages();
+
+//           for (let i = 1; i <= totalPages; i++) {
+//             pdf.setPage(i);
+//             pdf.setFontSize(8);
+//             pdf.setTextColor(150);
+//             pdf.text(15, 15, 'Cabeçalho do arquivo');
+//             pdf.text('Livro "pensamento" | Página: ' + i + '/' + totalPages+'', pdf.internal.pageSize.getWidth() - 85, pdf.internal.pageSize.getHeight() - 8);
+//           } 
+//         }).save();
+// }
+
+
+
+// function runImgReturnCanvas(local) {
+//     // Localiza todos os elementos de cabeçalho de seção 
+//     var headings; 
+//     console.log('ldkhbvljdabvhdbalhv')
+//     if (local.querySelectorAll) // Podemos fazer isso do modo fácil? 
+//         headings = local.querySelectorAll("img"); 
+//     else // Caso contrário, localiza os cabeçalhos da maneira difícil 
+//         headings = findHeadings(local, []); 
+//     // Percorre o corpo do documento recursivamente, procurando cabeçalhos 
+//     function findHeadings(root, sects) { 
+//         for(var c = root.firstChild; c != null; c = c.nextSibling) { 
+//             if (c.nodeType !== 1) continue; 
+//             if (c.tagName.length == 3 && c.tagName == "IMG") 
+//                 sects.push(c); 
+//             else 
+//             findHeadings(c, sects); 
+//         }
+//         return sects;
+//     }
+//     console.log(headings)
+//     for(var h = 0; h < headings.length; h++) { 
+//         var heading = headings[h]; 
+        
+//         let img = document.createElement('img');
+//         img.href = getImgDownload(heading);
+//         heading.parentNode.insertBefore(img, heading); 
+//         heading.parentNode.removeChild(heading);
+
+//         // // Encerra o cabeçalho em uma âncora nomeada para que possamos nos vincular a ele. 
+//         // var anchor = document.createElement("a"); 
+//         // anchor.name = "TOC"+sectionNumber; 
+//         // heading.parentNode.insertBefore(anchor, heading); 
+//         // anchor.appendChild(heading); 
+//         // // Agora cria um link para essa seção. 
+//         // var link = document.createElement("a"); 
+//         // link.href = "#TOC" + sectionNumber; 
+//         // // Destino do link 
+//         // link.innerHTML = sectionNumber+' - '+heading.innerHTML; 
+//         // // O texto do link é o mesmo do cabeçalho 
+//         // // Coloca o link em um div que pode ser estilizado de acordo com o nível. 
+//         // var entry = document.createElement("div"); 
+//         // entry.className = "TOCEntry TOCLevel" + level; 
+//         // entry.appendChild(link); 
+//         // // E adiciona o div no contêiner de TOC. 
+//         // toc.appendChild(entry); 
+//     }
+//     console.log(local)
+// }
+
+
+
+// function getImgDownload(img){
+//     // take any image
+//     // let img = img;
+
+//     // make <canvas> of the same size
+//     let canvas = document.createElement('canvas');
+//     canvas.width = img.clientWidth+500;
+//     canvas.height = img.clientHeight+500;
+
+//     let context = canvas.getContext('2d');
+
+//     // copy image to it (this method allows to cut image)
+//     context.drawImage(img, 0, 0);
+//     // we can context.rotate(), and do many other things on canvas
+
+//     // toBlob is async operation, callback is called when done
+//     canvas.toBlob(function(blob) {
+//         console.log(URL.createObjectURL(blob))
+//     // blob ready, download it
+//     let link = document.createElement('a');
+//     link.download = 'example.docx';
+
+//     link.href = URL.createObjectURL(blob);
+//     link.click();
+
+//     // // delete the internal blob reference, to let the browser clear memory from it
+//     URL.revokeObjectURL(link.href);
+//         return link.href;
+//     }, 'image/png');
+// }
+
+
+// window.addEventListener('load', function(){
+//     runImgReturnCanvas(document.getElementById('texto'));
+// })
+
+function pasteContentOfWeb(conteudo){
+    let range = verifyGetNode('DIV');
+    let pai = range.parentNode;
+    console.log(pai)
+    console.log(conteudo)
+    let position = range;
+    for(var c = 0; c < conteudo.children.length; c++){
+        // console.log(c)
+        let div = document.createElement('div');
+        if(conteudo.children[c].nodeName=='DIV'){
+            pai.insertBefore(conteudo.children[c].cloneNode(true), range);
+        }else if(conteudo.children[c].nodeName=='P'){
+            let tag = convertePParaDiv(conteudo.children[c].cloneNode(true));
+            // div.appendChild(tag);
+            pai.insertBefore(tag, range);
+        }else{
+            div.appendChild(conteudo.children[c].cloneNode(true));
+            pai.insertBefore(div, range);
+        }
+        position = conteudo.children[c].cloneNode(true);
+        console.log(position)
+    }
+}
+
+function openPasteContentOfWeb(){
+    window.open('rffeditor/windowPasteContentOfWeb.php', 'janela', 'height=550, width=500, top=50, left=100, scrollbar=no, fullscreen=no');
+}
+
+function convertePParaDiv(tag){
+    if(tag.nodeName=='P'){
+        let div = document.createElement('div');
+        div.setAttribute('style', tag.getAttribute('style'));
+        div.style.lineHeight = '1rem';
+        div.innerHTML = tag.innerHTML;
+        return div;
+    }
+    return tag;
+}
+let p = document.createElement('p');
+p.setAttribute('style', 'color:red;')
+p.innerHTML = 'Exemplo'
+console.log(convertePParaDiv(p));

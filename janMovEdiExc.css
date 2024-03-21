@@ -250,3 +250,36 @@
 #emotions{
     z-index: 10002;
 }
+
+.classBreakPage{
+    position: relative;
+    margin: 10px;
+    background-color: #e3e1e1;
+    border: 1px dotted #8d8b8b;
+    transition: ease-in-out 0.3s all;
+}
+
+.classBreakPage::before{
+    content: 'Quebra de Linha';
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    transition: ease-in-out 0.3s all;
+}
+
+.classBreakPage:hover{
+    background-color: #60a691;
+    transition: ease-in-out 0.3s all;
+}
+
+#viewRefBreakPage{
+    display: flex;
+}
+
+#textoBreakPageUp{
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    padding: 10px 20px;
+}

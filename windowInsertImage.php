@@ -194,7 +194,7 @@
 <body>
 <div id="geralInseriImagem">
         <div id="filesCentral" style="position: absolute; z-index: 10001; left:0; top:0; display:none; width: 100%; height: 100%;">
-        <div id="fecharFolders" style="position:absolute;right:0;top:0; padding:10px; background-color: #cdcdcd; cursor: pointer;" onclick="fecharFoldersJan()">Fechar</div>
+            <div id="fecharFolders" style="position:absolute;right:0;top:0; padding:10px; background-color: #cdcdcd; cursor: pointer;" onclick="fecharFoldersJan()">Fechar</div>
             <?php
                 include_once("listaImgs.php");
             ?>

@@ -4,6 +4,11 @@
 <head>
 
 <title>Editor de Texto JavaScript ::: Linha de Código (Robson Farias)</title>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" 
+        integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" 
+        crossorigin="anonymous" 
+        referrerpolicy="no-referrer">
+    </script> -->
     <link rel="stylesheet" type="text/css" href="rffeditor/editorRobsonFarias.css" />
     <link rel="stylesheet" type="text/css" href="rffeditor/janMovEdiExc.css" />
 <style>
@@ -517,6 +522,9 @@
         /* position: absolute; */
     }
 
+    #pages #footer{
+        background-color: white;
+    }
     
 </style>
 <script language="JavaScript">
@@ -644,7 +652,8 @@
     <button id="testeSel" onclick="insertCellRight()">insertCellRight</button>
     <button id="testeSel" onclick="removeCell()">removeCell</button> -->
     <!-- <button id="testeSel" onclick="getTags()">getTags</button> -->
-    <!-- <button id="testeSel" onclick="openWindowConfigBackgroundTable()">Background table</button> -->
+    <!-- <button id="testeSel" onclick="insertBreakPage()">Inserir quebra de página</button> -->
+    <!-- <button id="testeSel" onclick="printPDF()">Imprimir</button> -->
 
     <select name="typefontface" id="typefontface">
         <option value="padrao" name="padrao" id="padrao"  disabled selected>Font</option>
@@ -657,7 +666,7 @@
         <option value="Bebas Neue" name="Bebas Neue" id="Bebas Neue">Bebas Neue</option>
     </select>
     
-
+    
     <img src="rffeditor/imgEditor/bold.svg" title="Colocar em Negrito" onClick="negrito(), this.setAttribute('style', 'background-color:#cdcdcd;'), selectElem()" unselectable="on" spaw_state="true" id="negrito" />
     <img src="rffeditor/imgEditor/italic.svg" title="Colocar em Itálico" onClick="italico(), this.setAttribute('style', 'background-color:#cdcdcd;'), selectElem()" id="italico" />
     <img src="rffeditor/imgEditor/underline.svg" title="Colocar em Sublinhado" onClick="sublinhado(), this.setAttribute('style', 'background-color:#cdcdcd;'), selectElem()" id="sublinhado" />
@@ -738,6 +747,14 @@
     <img src="rffeditor/imgEditor/citacao.png" title="Inserir uma citação" onClick="insertTagsNew('cite'), this.setAttribute('style', 'background-color:#cdcdcd;'), selectElem()" id="cite" />
     
 
+    <img src="rffeditor/imgEditor/breakPage.svg" title="Inserir quebra de página" onClick="insertBreakPage()" unselectable="on" spaw_state="true" id="breakPage" />
+    <img src="rffeditor/imgEditor/summary.svg" title="Inserir/remover Sumário" onClick="setOrRemoveHeading()" unselectable="on" spaw_state="true" id="sumario" />
+    <!-- <img src="rffeditor/imgEditor/print.svg" title="Imprimir" onClick="printPageDiv()" unselectable="on" spaw_state="true" id="print" /> -->
+    <img src="rffeditor/imgEditor/print.svg" title="Imprimir" onClick="pdf()" id="print" />
+    <!-- <img src="rffeditor/imgEditor/print.svg" title="Imprimir" onClick="printPageDiv()" unselectable="on" spaw_state="true" id="print" /> -->
+    <img src="rffeditor/imgEditor/pastTextWordWeb.svg" title="Colar um conteúdo tirado da WEB ou do Word" onClick="openPasteContentOfWeb()" unselectable="on" spaw_state="true" id="pasteContentOfWeb" />
+    
+    
 </div>
 <div id="conteiner">
     <div id="texto" contenteditable="true" autofocus required autocomplete="off" spellcheck="true" class="box"><div>Digite o seu artigo aqui...</div></div>
@@ -750,6 +767,7 @@
 <script src="rffeditor/upload.js"></script>
 <script src="rffeditor/func.editor.robson.js"></script>
 <script src="rffeditor/dragDrop.js"></script>
+<script src="rffeditor/simplePDF.js"></script>
 <script>
     var janEfeitoTexto = document.getElementById("efeitosTexto");
     function fechaJanEfeitosTexto(){
@@ -848,6 +866,11 @@
 
     function cancelEditMedia(){
         document.getElementById('editVideo').setAttribute('style', 'display:none;')
+        
+        let ttt = nodePai.children[1].children[0];
+        console.log(ttt)
+        console.log(ttt.clientWidth)
+        console.log(ttt.clientHeight)
     }
 
     function salveUpdateIframe(){
@@ -916,7 +939,23 @@
         document.getElementById('editVideo').setAttribute('style', 'display:none;')
         cancelEditMedia()
     }
+    window.addEventListener('load', function(){
+        selectBtSumario();
+    })
 
+    function pdf(){
+        let pdf = new SimplePDF();
+        pdf.setBookName('Meu primeiro livro');
+        console.log(pdf.bookName)
+        pdf.toGenerateCleanPage('<center><h1>Livro Show de bola</h1></center>')
+        pdf.toGenerateCleanPage('<center><h2>SUMMARY</h2></center>')
+        pdf.header(pdf.bookName+' - Cabeçalho da página', '25px 25px 10px 25px');
+        pdf.getContent(document.getElementById('texto'));
+        pdf.footer('rodapé das páginas', '10px 70px 35px 70px', 'alternado');
+        pdf.toGeneratePDF();
+    }
+
+    
 </script>
 </body>
 </html>
